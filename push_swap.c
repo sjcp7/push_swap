@@ -73,6 +73,10 @@ int	main(int ac, char *av[])
 	//swap(tast);
 	//re_rotate(tast);
 	push(data.b, data.a);
+	push(data.b, data.a);
+	push(data.b, data.a);
+	rotate(data.b);
+	push(data.a, data.b);
 	while (i < tast->size)
 	{
 		ft_printf("%d.[%d]\n", ++i, tast->nums[tast->head]);

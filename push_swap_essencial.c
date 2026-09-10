@@ -50,16 +50,14 @@ void	push(t_stack *dst, t_stack *src)
 
 	i = src->head;
 	tmp = src->nums[i];
-	while (i < src->size)
-	{
-		src->nums[i] = src->nums[++i];	
-		if (src->head == 0)
-			i = src->size;
-		i = (i - 1) % src->size;
-	}
-	i = dst->size;
-	while (i > dst->head)
-		dst->nums[i] = dst->nums[--i];
+	while (i < src->size - 1)
+		src->nums[i++] = src->nums[i];
+	if (src->head == src->size - 1)
+		src->head -= 1;
+	dst->nums[dst->size] = dst->nums[0];
+	i = 0;
+	while (i <= dst->head)
+		dst->nums[i++] = dst->nums[i];
 	dst->nums[dst->head] = tmp;
 	dst->size++;
 	src->size--;
