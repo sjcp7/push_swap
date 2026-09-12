@@ -10,45 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-
-static int	calc_disorder(t_stack *a)
-{
-	int	mistakes;
-	int	pairs;
-	int	i;
-	int	j;
-	
-	if (!a)
-		return (-1);
-	pairs = a->size * a->size;
-	mistakes = 0;
-	i = 0;
-	if (pairs <= 0)
-		return (-1);
-	while (i < a->size)
-	{
-		j = i + 1;
-		while (j < a->size)
-			if (a->nums[i] > a->nums[j++])
-				mistakes += 1;
-		i++;
-	}
-	return ((mistakes * 10000) / pairs);
-}
-
-static int	compute_strategy(t_state *data)
-{
-	int	uni;
-
-	data->bch.disorder = calc_disorder(data->a);
-	uni = data->bch.disorder / 1000;
-	if (uni < 2)
-		return (1);
-	if (uni < 5)
-		return (2);
-	return (3);
-}
+#include "../includes/push_swap.h"
 
 int	main(int ac, char *av[])
 {
@@ -75,7 +37,9 @@ int	main(int ac, char *av[])
 	push(data.b, data.a);
 	push(data.b, data.a);
 	push(data.b, data.a);
-	rotate(data.b);
+	//rotate(data.b);
+	push(data.a, data.b);
+	push(data.a, data.b);
 	push(data.a, data.b);
 	while (i < tast->size)
 	{

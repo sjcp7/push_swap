@@ -12,7 +12,7 @@
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
-# include "libft/libft.h"
+# include "libft.h"
 # include <stdlib.h>
 
 # include <stdlib.h>
@@ -27,30 +27,19 @@ typedef struct s_stack
 
 typedef struct s_bench
 {
-	int	disorder;
-	int	visible;
-	int	strategy;
+	int		disorder;
+	int		visible;
+	int		strategy;
 	char	*ops;
-	int	total_ops;
-	int	sa;
-	int	sb;
-	int	ss;
-	int	pa;
-	int	pb;
-	int	ra;
-	int	rb;
-	int	rr;
-	int	rra;
-	int	rrb;
-	int	rrr;
-} t_bench;
+	int		total_ops;
+}	t_bench;
 
 typedef struct s_state
 {
-        t_stack *a;
-        t_stack *b;
+    t_stack *a;
+    t_stack *b;
 	t_bench	bch;
-}       t_state;
+}	t_state;
 
 enum ops
 {
@@ -69,6 +58,8 @@ enum ops
 
 int		ps_abort(t_state *data);
 int		parse(t_state *data, int ac, char *av[]);
+int		compute_strategy(t_state *data);
+void    ps_realloc(t_stack *p);
 void	swap(t_stack *pilha);
 void	rotate(t_stack *p);
 void	re_rotate(t_stack *p);

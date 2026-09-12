@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_essencial.c                              :+:      :+:    :+:   */
+/*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 void	swap(t_stack *pilha)
 {
@@ -46,18 +46,24 @@ void	rotate(t_stack *p)
 void	push(t_stack *dst, t_stack *src)
 {
 	int	i;
+	int	x;
 	int	tmp;
 
+	if (src->size == 0)
+		return ;
 	i = src->head;
+	x = i + 1;
 	tmp = src->nums[i];
-	while (i < src->size - 1)
-		src->nums[i++] = src->nums[i];
-	if (src->head == src->size - 1)
-		src->head -= 1;
+	while (i < src->size)
+		src->nums[i++] = src->nums[x++];
+	if (src->head == 0)
+		src->head = src->size;
+	src->head = (src->head - 1) % src->size;
 	dst->nums[dst->size] = dst->nums[0];
 	i = 0;
-	while (i <= dst->head)
-		dst->nums[i++] = dst->nums[i];
+	x = i + 1;
+	while (i < dst->head)
+		dst->nums[i++] = dst->nums[x++];
 	dst->nums[dst->head] = tmp;
 	dst->size++;
 	src->size--;

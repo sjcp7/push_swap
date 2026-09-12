@@ -10,50 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-
-int	ft_abort(t_state *data)
-{
-	if (data != NULL)
-	{
-		if (data->a != NULL)
-		{
-			free(data->a->nums);
-			free(data->a);
-		}
-		if (data->b != NULL)
-		{
-			free(data->b->nums);
-			free(data->b);
-		}
-	}
-	write(2, "Error\n", 6);
-	return (0);
-}
-
-static void	ft_realloc(t_stack *p)
-{
-	int	*tmp;
-	int	i;
-
-	if (p == NULL)
-		return ;
-	p->capacity *= 2;
-	i = p->size;
-	if (p->capacity == 0)
-	{
-		p->nums = (int *)malloc(sizeof(int));
-		p->capacity = 1;
-		return ;
-	}
-	tmp = (int *)malloc(p->capacity * sizeof(int));	
-	if (tmp == NULL)
-		return ;
-	while (i--)
-		tmp[i] = p->nums[i];
-	free(p->nums);
-	p->nums = tmp;
-}
+#include "../includes/push_swap.h"
 
 static void	selecter(t_bench *bch, char *av)
 {
@@ -78,7 +35,7 @@ static int	ft_add(t_stack *a, char *num)
 	sign = 1;
 	atoi = 0;
 	if (a->size >= a->capacity)
-		ft_realloc(a);
+		ps_realloc(a);
 	if (*num == '+' || *num == '-')
 	{
 		if (*num == '-')
@@ -98,25 +55,46 @@ static int	ft_add(t_stack *a, char *num)
 	return (1);
 }
 
-int	parse(t_state *data, int ac, char *av[])
+static int	division_01(t_state *data, int ac, char *av[])
 {
-	char	**vnum;
 	int	i;
-	int	x;
 
 	i = 1;
 	ft_bzero(data, sizeof(t_state));
 	data->a = (t_stack *) malloc(sizeof(t_stack));
-	data->b = NULL;
 	if (data->a == NULL)
-		return (ft_abort(NULL));
+		return (ps_abort(data));
+	data->b = (t_stack *) malloc(sizeof(t_stack));
+	if (data->b == NULL)
+		return (ps_abort(data));
 	ft_bzero(data->a, sizeof(t_stack));
+	ft_bzero(data->b, sizeof(t_stack));
 	if (ft_strncmp("--bench", av[i], ft_strlen(av[i])) == 0)
 		data->bch.visible = i++;
 	if (ac - i >= 1 && ft_strncmp("--", av[i], 2) == 0)
 		selecter(&data->bch, av[i++]);
 	if (ac - i < 1 || data->bch.strategy < 0)
-		ft_abort(data);
+		return(ps_abort(data));
+	return (i);
+}
+
+static int	division_02(t_state *data)
+{
+	data->b->nums = ft_calloc(data->a->capacity, sizeof(int));
+	if (data->b->nums == NULL)
+		return (ps_abort(data));
+	data->a->head = data->a->size - 1;
+	data->b->capacity = data->a->capacity;
+	return (1);
+}
+
+int	parse(t_state *data, int ac, char *av[])
+{
+	char	**vnum;
+	int		i;
+	int		x;
+	
+	i = division_01(data, ac, av);
 	while (i < ac)
 	{
 		vnum = ft_split(av[i], ' ');
@@ -128,21 +106,12 @@ int	parse(t_state *data, int ac, char *av[])
 				while (vnum[x])
 					free(vnum[x++]);
 				free(vnum);
-				return (ft_abort(data));
+				return (ps_abort(data));
 			}
 			free(vnum[x++]);
 		}
 		free(vnum);
 		i++;
 	}
-	data->b = (t_stack *) malloc(sizeof(t_stack));
-	if (data->b == NULL)
-		return (ft_abort(data));
-	ft_bzero(data->b, sizeof(t_stack));
-	data->b->nums = ft_calloc(data->a->capacity, sizeof(int));
-	if (data->b->nums == NULL)
-		return (ft_abort(data));
-	data->a->head = data->a->size - 1;
-	data->b->capacity = data->a->capacity;
-	return (1);
+	return (division_02(data));
 }
