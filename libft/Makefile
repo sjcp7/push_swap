@@ -16,6 +16,7 @@ CC      = cc
 CFLAGS  = -Wall -Wextra -Werror
 AR      = ar rcs
 RM      = rm -f
+INCLUDE = ../includes
 
 SRCS    = ft_printf.c \
 			  utils.c \
@@ -27,7 +28,8 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(AR) $(NAME) $(OBJS)
-
+%.o: %.c
+	$(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $@
 clean:
 	$(RM) $(OBJS)
 

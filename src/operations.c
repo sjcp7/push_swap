@@ -54,11 +54,13 @@ void	push(t_stack *dst, t_stack *src)
 	i = src->head;
 	x = i + 1;
 	tmp = src->nums[i];
-	while (i < src->size)
+	while (i < src->size - 1)
 		src->nums[i++] = src->nums[x++];
+	src->size--;
 	if (src->head == 0)
 		src->head = src->size;
-	src->head = (src->head - 1) % src->size;
+	if (src->size)
+		src->head = (src->head - 1) % src->size;
 	dst->nums[dst->size] = dst->nums[0];
 	i = 0;
 	x = i + 1;
@@ -66,7 +68,6 @@ void	push(t_stack *dst, t_stack *src)
 		dst->nums[i++] = dst->nums[x++];
 	dst->nums[dst->head] = tmp;
 	dst->size++;
-	src->size--;
 }
 
 void	operation(t_state *data, int ops)
