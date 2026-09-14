@@ -19,9 +19,7 @@ void	swap(t_stack *pilha)
 
 	if (pilha == NULL || pilha->size < 2)
 		return ;
-	i = (pilha->head - 1) % pilha->size;
-	if (pilha->head == 0)
-		i = pilha->size - 1;
+	i = ps_next(pilha);
 	swap = pilha->nums[pilha->head];
 	pilha->nums[pilha->head] = pilha->nums[i];
 	pilha->nums[i] = swap;
@@ -31,16 +29,14 @@ void	re_rotate(t_stack *p)
 {
 	if (p == NULL || p->size < 2)
 		return ;
-	p->head = (p->head + 1) % p->size;
+	p->head = ps_prev(p);
 }
 
 void	rotate(t_stack *p)
 {
 	if (p == NULL || p->size < 2)
 		return ;
-	if (p->head == 0)
-		p->head = p->size;
-	p->head = (p->head - 1) % p->size;
+	p->head = ps_next(p);
 }
 
 void	push(t_stack *dst, t_stack *src)
@@ -74,31 +70,31 @@ void	operation(t_state *data, int ops)
 {
 	if (ops == SA)
 		swap(data->a);
-	if (ops == SB)
+	else if (ops == SB)
 		swap(data->b);
-	if (ops == SS)
+	else if (ops == SS)
 	{
 		swap(data->a);
 		swap(data->b);
 	}
-	if (ops == PA)
+	else if (ops == PA)
 		push(data->a, data->b);
-	if (ops == PB)
+	else if (ops == PB)
 		push(data->b, data->a);
-	if (ops == RA)
+	else if (ops == RA)
 		rotate(data->a);
-	if (ops == RB)
+	else if (ops == RB)
 		rotate(data->b);
-	if (ops == RR)
+	else if (ops == RR)
 	{
 		rotate(data->a);
 		rotate(data->b);
 	}
-	if (ops == RRA)
+	else if (ops == RRA)
 		re_rotate(data->a);
-	if (ops == RRB)
+	else if (ops == RRB)
 		re_rotate(data->b);
-	if (ops == RRR)
+	else if (ops == RRR)
 	{
 		re_rotate(data->a);
 		re_rotate(data->b);
