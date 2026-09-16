@@ -6,7 +6,7 @@
 /*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:27:48 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/14 15:15:59 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/16 12:53:12 by ljanuari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,32 @@ void	ps_realloc(t_stack *p)
 		tmp[i] = p->nums[i];
 	free(p->nums);
 	p->nums = tmp;
+}
+
+int	normalizer(t_stack *a)
+{
+	int	*cpy;
+	int	x;
+	int	i;
+	int	j;
+		
+	cpy = (int *)malloc(sizeof(int) * a->size);
+	if (cpy == NULL)
+		return (0);
+	ft_memmove(cpy, a->nums, (a->size * sizeof(int)));
+	ps_merge_sort(cpy, 0, a->size - 1);
+	x = a->size;
+	j = 0;
+	while (j < x)
+	{
+		i = -1;
+		while (++i < x)
+			if (a->nums[i] == cpy[j])
+				break ;
+		a->nums[i] = j++;
+	}
+	free(cpy);
+	return (1);			
 }
 
 static int	calc_disorder(t_stack *a)
