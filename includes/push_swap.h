@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:03:44 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/10 16:18:46 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/16 12:55:24 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	push(t_stack *dst, t_stack *src);
 void	bubble_sort(t_state *data);
 void	selection_sort(t_state *data);
 void	insertion_sort(t_state *data); // in building...
-void	bucket_sort(t_state *data);
+void	chunk_sort(t_state *data);
 void	radix_sort(t_state *data);
 //
 void	operation(t_state *data, int ops); //This is an intermediate function for using operation functions. You can add the same enum order.

@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   chunk_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/07 15:20:05 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/16 12:56:11 by samupedr         ###   ########.fr       */
+/*   Created: 2026/09/16 12:20:21 by samupedr          #+#    #+#             */
+/*   Updated: 2026/09/16 12:55:37 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int	main(int ac, char *av[])
+void	chunk_sort(t_state *data)
 {
-	t_state	data;
-
-	if (ac < 2 || !parse(&data, ac, av))
-		return (0);
-	if (!data.bch.strategy)
-		data.bch.strategy = compute_strategy(&data);
-	if (data.bch.strategy == 1)
-		selection_sort(&data);
-	else if (data.bch.strategy == 2)
-		chunk_sort(&data);
-	else if (data.bch.strategy == 3)
-		radix_sort(&data);
-	//preformer_operations(&data.bch);
-	if (data.bch.visible)
-		ft_print_bench(&data.bch);
+	
 }
