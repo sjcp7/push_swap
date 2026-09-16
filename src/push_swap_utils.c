@@ -6,7 +6,7 @@
 /*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:27:48 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/10 17:33:46 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/14 15:15:59 by ljanuari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ int	ps_abort(t_state *data)
 	{
 		if (data->a != NULL)
 		{
-			free(data->a->nums);
+			if (data->a->nums)
+				free(data->a->nums);
 			free(data->a);
 		}
 		if (data->b != NULL)
 		{
-			free(data->b->nums);
+			if (data->b->nums)
+				free(data->b->nums);
 			free(data->b);
 		}
 	}

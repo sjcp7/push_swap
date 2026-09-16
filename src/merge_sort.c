@@ -48,7 +48,7 @@ void	merge(int *nums, int l, int m, int r)
 	free(L);
 }
 
-void	merge_sort(int *nums, int l, int r)
+void	ps_merge_sort(int *nums, int l, int r)
 {
 	int	m;
 
@@ -57,8 +57,8 @@ void	merge_sort(int *nums, int l, int r)
 	if (l < r)
 	{
 		m = l + (r - l) / 2; 
-		merge_sort(nums, l, m);
-		merge_sort(nums, m + 1, r);
+		ps_merge_sort(nums, l, m);
+		ps_merge_sort(nums, m + 1, r);
 
 		merge(nums, l, m, r);
 	}

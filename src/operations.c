@@ -99,4 +99,7 @@ void	operation(t_state *data, int ops)
 		re_rotate(data->a);
 		re_rotate(data->b);
 	}
+	else
+		return ;
+	ps_add_buffer(&data->bch, ops);
 }
