@@ -33,6 +33,7 @@ static int	find_in_front(t_stack *b, int num)
 		next = b->nums[i];
 		if (next >= maior || num > next)
 			return (index + 1);
+		index++;
 		maior = b->nums[i];
 	}
 	return (index);
@@ -55,7 +56,7 @@ static int	find_in_back(t_stack *b, int num)
 		i = (i + 1) % b->size;
 		prev = b->nums[i];
 		if (prev <= menor || num < prev)
-			break ;
+			return(index);
 		index++;
 		menor = b->nums[i];
 	}
