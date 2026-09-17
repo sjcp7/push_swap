@@ -23,13 +23,13 @@ static void	ps_ops_alloc(t_bench *bench)
 	char	*tmp;
 	int	i;
 
-	if (bench == NULL || bench->total_ops < bench->capacity)
+	if (bench == NULL || bench->total_ops + 1 < bench->capacity)
 		return ;
 	bench->capacity *= 2;
 	if (bench->capacity == 0)
 	{
-		bench->ops = (char *)malloc(sizeof(char));
-		bench->capacity = 1;
+		bench->ops = (char *)ft_calloc(2, sizeof(char));
+		bench->capacity = 2;
 		return ;
 	}	
 	tmp = (char *)ft_calloc(bench->capacity, sizeof(char));
@@ -47,8 +47,8 @@ void	ps_add_buffer(t_bench *bench, int op)
 	int	i;
 
 	ps_ops_alloc(bench);
-	i = ++bench->total_ops;
-	bench->ops[i - 1] = op;
+	i = bench->total_ops++;
+	bench->ops[i] = op;
 }
 
 void	ps_print_op(t_bench *bench)

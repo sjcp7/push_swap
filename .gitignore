@@ -1,4 +1,5 @@
 *.swp
+*.a
 *.o
 main.c
 a.out

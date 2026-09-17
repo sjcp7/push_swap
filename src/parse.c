@@ -6,7 +6,7 @@
 /*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:27:48 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/16 12:54:31 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/16 13:24:17 by ljanuari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ static int	ft_add(t_stack *a, char *num)
 			sign = -1;
 		num++;
 	}
-	while (*num >= '0' && *num <= '9')
+	while ((*num >= '0' && *num <= '9') && (-1 < atoi))
 		atoi = (atoi * 10) + (*num++ - '0');
-	if (*num != '\0' || a->nums == NULL)
+	if (*num != '\0' || a->nums == NULL || (-1 > atoi))
 		return (0);
 	i = 0;
 	atoi *= sign;

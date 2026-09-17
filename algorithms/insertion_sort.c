@@ -1,19 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   insertion_sort.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/17 10:35:51 by ljanuari          #+#    #+#             */
+/*   Updated: 2026/09/17 15:59:19 by ljanuari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// this project was did by leosnane januario
-// leosnanej@gmail.com
-// 12/09/2026
 
 #include "../includes/push_swap.h"
-
-// this is a insertion_sort adaptation for a staks
-// it works like two hand of cards, one hand is sorted and another one isn't yet, so you can take any card from unsoted hand and put in right position in a sorted hand, you need to find where is the right position in a sorted hand, make rotates (or reverse_rotates if it's more apropriet) and push the value to right position in a sorted hand
-//
 
 static int	find_in_front(t_stack *b, int num)
 {
 	int	i;
 	int 	x;
-	int	prev;
+	int	next;
 	int	maior;
 	int	index;
 	
@@ -21,16 +25,14 @@ static int	find_in_front(t_stack *b, int num)
 	i = b->head;
 	x = b->size;
 	maior = b->nums[i];
-	while (maior > num && x--)
+	while (maior > num)
 	{
-		ft_printf("[%d] > [%d]\n", maior, num);
-		index++;
 		if (i == 0)
 			i = b->size;
 		i = (i - 1) % b->size;
-		prev = b->nums[i];
-		if (prev > maior)
-			break ;
+		next = b->nums[i];
+		if (next >= maior || num > next)
+			return (index + 1);
 		maior = b->nums[i];
 	}
 	return (index);
@@ -48,54 +50,77 @@ static int	find_in_back(t_stack *b, int num)
 	i = b->head;
 	x = b->size;
 	menor = b->nums[i];
-	while (menor < num && x--)
-	{
-		ft_printf("[%d] < [%d]\n", b->nums[i], num);
-		index++;	
+	while (menor < num)
+	{	
 		i = (i + 1) % b->size;
 		prev = b->nums[i];
-		if (prev < menor)
+		if (prev <= menor || num < prev)
 			break ;
+		index++;
 		menor = b->nums[i];
 	}
-	return (index * -1);
+	return (index);
 }
 
-static int	find_posix(t_stack *b, int num)
+static void	find_posix(t_state *data, int num)
 {
 	int	i;
-	int	(*way)(t_stack *, int);
-	
+	int	index;
+	int	op;
+	t_stack	*b;
+
+	b = data->b;
 	if (b->size == 0)
-		return (0);
+		return ;
 	i = b->head;
-	way = &find_in_back;
 	if (b->nums[i] > num)
-		way = &find_in_front;
-	return (way(b, num));
+	{
+		op = RB;
+		index = find_in_front(b, num);
+		if (index > (b->size / 2))
+		{
+			op = RRB;
+			index = (b->size - index);
+		}
+	}
+	else
+	{
+		op = RRB;
+		index = find_in_back(b, num);
+		if (index > (b->size / 2))
+		{
+			op = RB;
+			index = (b->size - index);
+		}
+	}
+	while (index--)
+		operation(data, op);
 }
 
-static int	find_max(t_stack *b)
+static void	find_max(t_state *data)
 {
 	int	i;
 	int	index;
 	int	x;
-	int	prev;
+	t_stack *b;
 
+	b = data->b;
 	i = b->head;
-	x = b->size;
-	prev = b->nums[i];
-	i = ps_next(b);
+	x = b->size - 1;
 	index = 0;
-	while (prev < b->nums[i])
+	while (b->nums[i] != x)
 	{
 		index++;
-		prev = b->nums[i];
-		if (i == 0)
-			i = b->size;
-		i = (i - 1) % b->size;
+		i = (i + 1) % b->size;
 	}
-	return (index);
+	x = RRB;
+	if (index >= (b->size / 2))
+	{
+		x = RB;
+		index = (b->size - index);
+	}
+	while (index--)
+		operation(data, x);
 }
 
 void	insertion_sort(t_state *data)
@@ -109,35 +134,10 @@ void	insertion_sort(t_state *data)
 	b = data->b;
 	while (a->size)
 	{
-		index = find_posix(b, a->nums[a->head]);
-		ft_printf("\n-[%d]-\n", index);
-		op = RB;
-		if (index < 0)
-		{
-			op = RRB;
-			index *= -1;
-		}
-		/*if (index > (b->size / 2))
-		{
-			if (op == RB)
-				op = RRB;
-			else
-				op = RB;
-			index = (b->size - index);
-		}*/
-		while (index--)
-			operation(data, op);
+		find_posix(data, a->nums[a->head]);
 		operation(data, PB);
 	}
-	index = find_max(b);
-	op = RRB;
-	if (index > (b->size / 2))
-	{
-		op = RB;	
-		index = (b->size - index);
-	}
-	while (index--)
-		operation(data, op);
+	find_max(data);
 	while (b->size)
 		operation(data, PA);
 }
