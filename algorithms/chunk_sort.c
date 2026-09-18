@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/16 12:20:21 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/18 12:32:15 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/18 13:12:35 by ljanuari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,11 @@ static void	move_k(t_state *data, int k)
 void	chunk_sort(t_state *data)
 {
 	t_stack	*a;
-	t_stack	*b;
 	int	i;
 	int	chunks;
 	int	k;
 	
 	a = data->a;
-	b = data->b;
 	chunks = ps_sqrt(a->size);
 	k = chunks;
 	while (a->size)
@@ -100,7 +98,7 @@ void	chunk_sort(t_state *data)
 		{
 			move_k(data, k);
 			find_posix(data, a->nums[a->head]);
-			operation(data, pb);
+			operation(data, op);
 		}
 		k += chunks;
 	}	
