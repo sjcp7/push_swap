@@ -6,7 +6,7 @@
 /*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 12:27:11 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/18 12:32:52 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 14:59:59 by ljanuari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ int	find_in_front(t_stack *b, int num)
 	x = b->size;
 	maior = b->nums[i];
 	while (maior > num)
-	{
-		if (i == 0)
-			i = b->size;
-		i = (i - 1) % b->size;
+	{	
+		i = (i + 1) % b->size;
 		next = b->nums[i];
 		if (next >= maior || num > next)
 			return (index + 1);
@@ -52,7 +50,9 @@ int	find_in_back(t_stack *b, int num)
 	menor = b->nums[i];
 	while (menor < num)
 	{	
-		i = (i + 1) % b->size;
+		if (i == 0)
+			i = b->size;
+		i = (i - 1) % b->size;
 		prev = b->nums[i];
 		if (prev <= menor || num < prev)
 			return(index);
@@ -113,10 +113,10 @@ void	find_max(t_state *data)
 		index++;
 		i = (i + 1) % b->size;
 	}
-	x = RRB;
+	x = RB;
 	if (index >= (b->size / 2))
 	{
-		x = RB;
+		x = RRB;
 		index = (b->size - index);
 	}
 	while (index--)

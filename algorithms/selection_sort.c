@@ -6,7 +6,7 @@
 /*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 10:54:48 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/14 10:55:15 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 15:20:10 by ljanuari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ static int	find_min(t_stack *p)
 	reps = p->size;
 	while (--reps)
 	{
-		if (i == 0)
-			i = p->size;
-		i = (i - 1) % p->size;
+		i = (i + 1) % p->size;
 		dif++;
 		if (p->nums[i] < menor)
 		{

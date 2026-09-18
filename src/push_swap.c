@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:20:05 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/18 13:17:53 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 16:39:54 by ljanuari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,16 @@ int	main(int ac, char *av[])
 	//preformer_operations(&data.bch);
 	if (data.bch.visible)
 		ft_print_bench(&data.bch);*/
-	chunk_sort(&data);
-	ps_print_op(&data.bch);
+	//chunk_sort(&data);
+	//ps_print_op(&data.bch);
 	t_stack *test = data.a;
+	operation(&data, PB);
+	operation(&data, PB);
+	operation(&data, SA);
+	operation(&data, SB);
+	operation(&data, RA);
+	operation(&data, RRA);
+	operation(&data, PA);
 	ft_printf("-------- stack one -------\n");
 	int i = test->size;
 	int x = 1;
@@ -54,6 +61,4 @@ int	main(int ac, char *av[])
 	free(data.bch.ops);
 	free(data.b->nums);
 	free(data.b);
-
-
 }

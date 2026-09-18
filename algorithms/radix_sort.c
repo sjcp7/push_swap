@@ -6,7 +6,7 @@
 /*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/16 12:24:32 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/16 12:51:08 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 15:16:32 by ljanuari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 void	radix_sort(t_state *data)
 {
-	int	c;
+	int	nbr_bits;
 	int	x;
 	int	i;
-	int	k;
+	int	bit;
 
 	if (!data->a || !data->b)
 		return ;
-	c = data->a->size;
+	nbr_bits = data->a->size;
 	if (!normalizer(data->a))
 		return ;
 	i = 0;
-	while (c)
+	while (nbr_bits)
 	{
 		i++;
-		c /= 2;
+		nbr_bits /= 2;
 	}
-	c = i;
+	nbr_bits = i;
 	i = 0;
-	while (i < c)
+	while (i < nbr_bits)
 	{
-		k = 1 << i;
+		bit = 1 << i;
 		x = data->a->size;
 		while (x--)
-			if (data->a->nums[data->a->head] & k)
+			if (data->a->nums[data->a->head] & bit)
 				operation(data, RA);
 			else
 				operation(data, PB);

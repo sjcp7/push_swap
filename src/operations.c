@@ -6,7 +6,7 @@
 /*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 15:12:07 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/10 16:18:35 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 16:40:03 by ljanuari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,24 @@ void	rotate(t_stack *p)
 void	push(t_stack *dst, t_stack *src)
 {
 	int	i;
-	int	x;
 	int	tmp;
 
 	if (src->size == 0)
 		return ;
 	i = src->head;
-	x = i + 1;
 	tmp = src->nums[i];
 	while (i < src->size - 1)
-		src->nums[i++] = src->nums[x++];
+	{
+		src->nums[i] = src->nums[i + 1];
+		i++;
+	}
 	src->size--;
-	if (src->head == 0)
-		src->head = src->size;
-	if (src->size)
-		src->head = (src->head - 1) % src->size;
-	dst->nums[dst->size] = dst->nums[0];
-	i = 0;
-	x = i + 1;
-	while (i < dst->head)
-		dst->nums[i++] = dst->nums[x++];
+	i = dst->size;
+	while (i > dst->head)
+	{
+		dst->nums[i] = dst->nums[i - 1];
+		i--;
+	}
 	dst->nums[dst->head] = tmp;
 	dst->size++;
 }

@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:27:48 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/18 12:32:58 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/18 14:45:49 by ljanuari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static int	division_02(t_state *data)
 	data->b->nums = ft_calloc(data->a->capacity, sizeof(int));
 	if (data->b->nums == NULL || normalizer(data->a) == 0)
 		return (ps_abort(data));
-	data->a->head = data->a->size - 1;
+	data->a->head = 0;
 	data->b->capacity = data->a->capacity;
 	return (1);
 }
