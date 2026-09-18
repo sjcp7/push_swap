@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/20 10:12:31 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/08/26 12:46:47 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 15:08:50 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,20 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 256
+#  define BUFFER_SIZE 4
 # endif
 
-typedef struct s_list
+typedef struct v_aux
 {
-	struct s_list	*next;
-	int				save;
-	int				i;
-	int				fd;
-	char			buffer[BUFFER_SIZE + 1];
-}	t_list;
+	int			save;
+	int			readt;
+	char		*line;
+	int			i;
+}	t_helper;
 
-int		buffer_move(char *line, char *buff, int start, int n);
-t_list	*check(t_list *heap, int fd);
-void	my_born(char *buffer);
-char	*ft_realloc(char *s, int ps, int *size);
+void	buffer_move(char *buff, int start, int readt);
+int		gnl_strllcat(t_helper *pa, char *src);
+char	*gnl_realloc(char *s, t_helper *pa);
 char	*get_next_line(int fd);
-void	ft_lstremove(t_list **heap, int fd);
-t_list	*remember(t_list *heap, char **line, int fd);
+int		remember(char **line, char *buffer);
 #endif

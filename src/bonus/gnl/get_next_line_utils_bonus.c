@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 14:16:39 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/08/31 09:15:39 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 15:09:32 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-char	*ft_realloc(char *s, t_helper *pa)
+char	*gnl_realloc(char *s, t_helper *pa)
 {
 	char	*dup;
 	int		ps;
@@ -68,7 +68,7 @@ void	buffer_move(char *buff, int start, int readt)
 		buff[i++] = 0;
 }
 
-int	ft_strllcat(t_helper *pa, char *src)
+int	gnl_strllcat(t_helper *pa, char *src)
 {
 	int	x;
 	int	aux;
