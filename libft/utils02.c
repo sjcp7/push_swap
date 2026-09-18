@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils02.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/22 14:39:41 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/08/22 14:39:52 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 12:57:00 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int	my_printfloat(float n)
 {

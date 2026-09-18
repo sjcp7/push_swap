@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   prints.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 13:04:03 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/08/21 10:20:24 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 12:57:00 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 #include <string.h>
 
 int		nbr_leng(int nbr);

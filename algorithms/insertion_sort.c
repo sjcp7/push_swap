@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   insertion_sort.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 10:35:51 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/17 15:59:19 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 12:42:43 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,6 @@ void	insertion_sort(t_state *data)
 {
 	t_stack *a;
 	t_stack *b;
-	int	op;
-	int	index;
 
 	a = data->a;
 	b = data->b;

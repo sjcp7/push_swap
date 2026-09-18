@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 13:47:03 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/08/06 08:55:59 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 12:56:23 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# include "ft_printf.h"
 # include <string.h>
 # include <stdarg.h>
 # include <stdlib.h>
@@ -23,6 +22,18 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_format
+{
+	int		zero;
+	int		plus;
+	int		minus;
+	int		space;
+	int		hash;
+	int		width;
+	int		precision;
+	char	identifi;
+}	t_format;
 
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
@@ -67,4 +78,14 @@ void			ft_lstdelone(t_list *lst, void (*del)(void*));
 void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *l, void *(*f)(void *), void (*del)(void *));
+
+int				my_strlimprint(char *s, int lim);
+int				my_printchar(char c, t_format format);
+int				my_printstr(char *s, t_format format);
+int				my_printnumber(int n, t_format format);
+int				my_printnumber_u(unsigned int n, t_format format);
+int				my_printadress(void *adr, t_format format);
+int				my_printhex(unsigned int n, t_format format);
+int				my_printfloat(float n);
+int				ft_printf(const char *s, ...);
 #endif

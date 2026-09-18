@@ -3,3 +3,4 @@
 *.o
 main.c
 a.out
+push_swap

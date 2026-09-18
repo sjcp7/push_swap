@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:27:48 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/16 13:24:17 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/18 12:32:58 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	selecter(t_bench *bch, char *av)
 {
-	int	len;
+	size_t	len;
 
 	len = ft_strlen(av);
 	if (len == ft_strlen("--simple"))
