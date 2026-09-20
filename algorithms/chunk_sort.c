@@ -47,21 +47,21 @@ static int	division2(t_stack *a, int *front_index, int *back_index, int *op)
 	
 	if (*back_index < *front_index)
 	{
-		*op = RA;
+		*op = RRA;
 		index = *back_index;
 		if (*back_index > (a->size / 2))
 		{
-			*op = RRA;
+			*op = RA;
 			index = a->size - *back_index;
 		}
 	}
 	else
 	{
-		*op = RRA;
+		*op = RA;
 		index = *front_index;
 		if (*front_index > (a->size / 2))
 		{
-			*op = RA;
+			*op = RRA;
 			index = a->size - *front_index;
 		}
 	}
