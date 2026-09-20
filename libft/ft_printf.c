@@ -72,7 +72,7 @@ static int	putva(t_format *flags, va_list *ptr)
 	else if (flags->identifi == '%')
 		return (write(1, "%", 1));
 	else if (flags->identifi == 'f')
-		return (my_printfloat((float)va_arg(*ptr, double)));
+		return (my_printfloat((float)va_arg(*ptr, double), *flags));
 	return (0);
 }
 

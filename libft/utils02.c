@@ -12,18 +12,38 @@
 
 #include "libft.h"
 
-int	my_printfloat(float n)
+int	arredondar(int num, int precision)
+{
+	int	pivot;
+
+	pivot = 1;
+	while (precision--)
+		pivot *= 10;
+	if (pivot == 1)
+		return (0);
+	while (num > pivot)
+	{
+		if ((num % 10) >= 5)
+			num = (num / 10) + 1;
+		else
+			num = num / 10;
+	}
+	return (num);
+}
+
+int	my_printfloat(float n, t_format format)
 {
 	long	intpart;
-	t_format format;
 	long	decimal_part;
-	
-	ft_bzero(&format, sizeof(t_format));
-	format.precision = -1;
+		
 	intpart = n;
 	n -= intpart;
 	n *= 100000;
 	decimal_part = n;
+	if (format.precision >= 0)
+		decimal_part = arredondar(decimal_part, format.precision);
+	ft_bzero(&format, sizeof(t_format));
+	format.precision = -1;
 	return (my_printnumber(intpart, format) + my_printchar('.', format) + my_printnumber(decimal_part, format));
 }
 static void	division_1(const char **format, t_format *flags, va_list *va)
