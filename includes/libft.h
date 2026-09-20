@@ -46,6 +46,7 @@ void			ft_bzero(void *s, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
 void			*ft_memmove(void *dest, const void *src, size_t n);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
+int			ft_strcmp(const char *s1, const char *s2);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 int				ft_toupper(int c);
 int				ft_tolower(int c);
@@ -86,6 +87,6 @@ int				my_printnumber(int n, t_format format);
 int				my_printnumber_u(unsigned int n, t_format format);
 int				my_printadress(void *adr, t_format format);
 int				my_printhex(unsigned int n, t_format format);
-int				my_printfloat(float n);
+int				my_printfloat(float n, t_format format);
 int				ft_printf(const char *s, ...);
 #endif

@@ -25,24 +25,34 @@ typedef struct s_stack
 
 typedef struct s_bench
 {
-	int		disorder;
+	float		disorder;
 	int		visible;
 	int		strategy;
-	char	*ops;
-	int		capacity;
+	int		adaptive;
 	int		total_ops;
+	int		sa;
+	int		sb;
+	int		ss;
+	int		pa;
+	int		pb;
+	int		ra;
+	int		rb;
+	int		rr;
+	int		rra;
+	int		rrb;
+	int		rrr;
 }	t_bench;
 
 typedef struct s_state
 {
     	t_stack *a;
     	t_stack *b;
-	t_bench	bch;
+	t_bench	bench;
 }	t_state;
 
-enum ops
+typedef enum s_operation
 {
-	SA = 1,
+	SA,
 	SB,
 	SS,
 	PA,
@@ -53,7 +63,7 @@ enum ops
 	RRA,
 	RRB,
 	RRR
-};
+}	t_operation;
 
 int		ps_abort(t_state *data);
 int		ps_next(t_stack *p);
@@ -63,11 +73,8 @@ int		ps_sqrt(int num);
 int		compute_strategy(t_state *data);
 void    ps_realloc(t_stack *p);
 int	normalizer(t_stack *a);
-void	ps_add_buffer(t_bench *bench, int op);
-void	ps_print_op(t_bench *bench);
+void	ps_print_bench(t_bench bench);
 void	ps_merge_sort(int *nums, int l, int r);
-int	find_in_back(t_stack *b, int num);
-int	find_in_front(t_stack *b, int num);
 void	find_posix(t_state *data, int num);
 void	find_max(t_state *data);
 void	swap(t_stack *pilha);
@@ -81,5 +88,5 @@ void	insertion_sort(t_state *data);
 void	chunk_sort(t_state *data);
 void	radix_sort(t_state *data);
 //
-void	operation(t_state *data, int ops);
+void	operation(t_state *data, t_operation ops);
 #endif
