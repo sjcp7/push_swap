@@ -54,6 +54,8 @@ void	push(t_stack *dst, t_stack *src)
 		i++;
 	}
 	src->size--;
+	if (src->size != 0)
+		src->head %= src->size;
 	i = dst->size;
 	while (i > dst->head)
 	{
@@ -64,40 +66,3 @@ void	push(t_stack *dst, t_stack *src)
 	dst->size++;
 }
 
-void	operation(t_state *data, int ops)
-{
-	if (ops == SA)
-		swap(data->a);
-	else if (ops == SB)
-		swap(data->b);
-	else if (ops == SS)
-	{
-		swap(data->a);
-		swap(data->b);
-	}
-	else if (ops == PA)
-		push(data->a, data->b);
-	else if (ops == PB)
-		push(data->b, data->a);
-	else if (ops == RA)
-		rotate(data->a);
-	else if (ops == RB)
-		rotate(data->b);
-	else if (ops == RR)
-	{
-		rotate(data->a);
-		rotate(data->b);
-	}
-	else if (ops == RRA)
-		re_rotate(data->a);
-	else if (ops == RRB)
-		re_rotate(data->b);
-	else if (ops == RRR)
-	{
-		re_rotate(data->a);
-		re_rotate(data->b);
-	}
-	else
-		return ;
-	ps_add_buffer(&data->bch, ops);
-}

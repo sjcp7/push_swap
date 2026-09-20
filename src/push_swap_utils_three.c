@@ -12,17 +12,15 @@
 
 #include "../includes/push_swap.h"
 
-int	find_in_front(t_stack *b, int num)
+static int	find_in_front(t_stack *b, int num)
 {
 	int	i;
-	int 	x;
 	int	next;
 	int	maior;
 	int	index;
 	
 	index = 0;
 	i = b->head;
-	x = b->size;
 	maior = b->nums[i];
 	while (maior > num)
 	{	
@@ -36,17 +34,15 @@ int	find_in_front(t_stack *b, int num)
 	return (index);
 }
 
-int	find_in_back(t_stack *b, int num)
+static int	find_in_back(t_stack *b, int num)
 {
 	int	index;
 	int	prev;
-	int	x;
 	int	menor;
 	int	i;
 	
 	index = 0;
 	i = b->head;
-	x = b->size;
 	menor = b->nums[i];
 	while (menor < num)
 	{	
@@ -64,16 +60,14 @@ int	find_in_back(t_stack *b, int num)
 
 void	find_posix(t_state *data, int num)
 {
-	int	i;
 	int	index;
-	int	op;
+	t_operation op;
 	t_stack	*b;
 
 	b = data->b;
 	if (b->size == 0)
 		return ;
-	i = b->head;
-	if (b->nums[i] > num)
+	if (b->nums[b->head] > num)
 	{
 		op = RB;
 		index = find_in_front(b, num);
@@ -99,28 +93,29 @@ void	find_posix(t_state *data, int num)
 
 void	find_max(t_state *data)
 {
-	int	i;
 	int	index;
-	int	x;
+	int	find;
+	int	i;
+	t_operation	op;
 	t_stack *b;
 
 	b = data->b;
-	i = b->head;
-	x = b->size - 1;
+	find = b->size - 1;
 	index = 0;
-	while (b->nums[i] != x)
+	i = b->head;
+	while (b->nums[i] != find)
 	{
 		index++;
 		i = (i + 1) % b->size;
 	}
-	x = RB;
+	op = RB;
 	if (index >= (b->size / 2))
 	{
-		x = RRB;
+		op = RRB;
 		index = (b->size - index);
 	}
 	while (index--)
-		operation(data, x);
+		operation(data, op);
 }
 
 int	ps_sqrt(int num)
@@ -131,7 +126,7 @@ int	ps_sqrt(int num)
 
 	if (num <= 0)
 		return (0);
-	i = 2;
+	i = 1;
 	while (i * i < num)
 		i++;
 	if (i * i == num)

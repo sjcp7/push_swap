@@ -12,34 +12,20 @@
 
 #include "../includes/push_swap.h"
 
-static void	selecter(t_bench *bch, char *av)
+static void	selecter(t_bench *bench, char *av)
 {
-	size_t	len;
-
-	len = ft_strlen(av);
-	if (len == ft_strlen("--simple"))
-		;
-	else if (len == ft_strlen("--medium"))
-		;
-	else if (len == ft_strlen("--complex"))
-		;
-	else if (len == ft_strlen("--adaptive"))
-		;
+	
+	bench->adaptive = 0;
+	if (ft_strcmp("--simple", av) == 0)
+		bench->strategy = 1;
+	else if (ft_strcmp("--medium", av) == 0)
+		bench->strategy = 2;
+	else if (ft_strcmp("--complex", av) == 0)
+		bench->strategy = 3;
+	else if (ft_strcmp("--adaptive", av) == 0)
+		bench->adaptive = 1;
 	else
-	{
-		bch->strategy = -1;
-		return ;
-	}
-	if (ft_strncmp("--simple", av, len) == 0)
-		bch->strategy = 1;
-	else if (ft_strncmp("--medium", av, len) == 0)
-		bch->strategy = 2;
-	else if (ft_strncmp("--complex", av, len) == 0)
-		bch->strategy = 3;
-	else if (ft_strncmp("--adaptive", av, len) == 0)
-		bch->strategy = 0;
-	else
-		bch->strategy = -1;
+		bench->strategy = -1;
 }
 
 static int	ft_add(t_stack *a, char *num)
@@ -89,11 +75,12 @@ static int	division_01(t_state *data, int ac, char *av[])
 	data->a->nums = NULL;
 	ft_bzero(data->b, sizeof(t_stack));
 	data->b->nums = NULL;
-	if (ft_strncmp("--bench", av[i], ft_strlen(av[i])) == 0)
-		data->bch.visible = i++;
+	data->bench.adaptive = 1;
+	if (ft_strcmp("--bench", av[i]) == 0)
+		data->bench.visible = i++;
 	if (ac - i >= 1 && ft_strncmp("--", av[i], 2) == 0)
-		selecter(&data->bch, av[i++]);
-	if (ac - i < 1 || data->bch.strategy == -1)
+		selecter(&data->bench, av[i++]);
+	if (ac - i < 1 || data->bench.strategy == -1)
 		return(ps_abort(data));
 	return (i);
 }

@@ -80,23 +80,21 @@ int	normalizer(t_stack *a)
 		a->nums[i] = j++;
 	}
 	free(cpy);
-	return (1);			
+	return (1);
 }
 
-static int	calc_disorder(t_stack *a)
+static float	calc_disorder(t_stack *a)
 {
 	int	mistakes;
 	int	pairs;
 	int	i;
 	int	j;
 	
-	if (!a)
+	if (!a || a->size == 0)
 		return (-1);
-	pairs = a->size * a->size;
+	pairs = a->size * (a->size - 1) / 2;
 	mistakes = 0;
 	i = 0;
-	if (pairs <= 0)
-		return (-1);
 	while (i < a->size)
 	{
 		j = i + 1;
@@ -105,18 +103,20 @@ static int	calc_disorder(t_stack *a)
 				mistakes += 1;
 		i++;
 	}
-	return ((mistakes * 10000) / pairs);
+	return ((float)mistakes /(float)pairs);
 }
 
 int	compute_strategy(t_state *data)
 {
-	int	uni;
+	float	disord;
 
-	data->bch.disorder = calc_disorder(data->a);
-	uni = data->bch.disorder / 1000;
-	if (uni < 2)
+	data->bench.disorder = calc_disorder(data->a);
+	if (data->bench.strategy)
+		return (data->bench.strategy);
+	disord = data->bench.disorder;
+	if (disord < 0.2)
 		return (1);
-	if (uni < 5)
+	if (disord < 0.5)
 		return (2);
 	return (3);
 }

@@ -18,68 +18,88 @@ int	ps_next(t_stack *p)
 	return ((p->head + 1) % p->size);
 }
 
-static void	ps_ops_alloc(t_bench *bench)
+static void	division1(t_state *data, t_operation ops)
 {
-	char	*tmp;
-	int	i;
-
-	if (bench == NULL || bench->total_ops + 1 < bench->capacity)
-		return ;
-	bench->capacity *= 2;
-	if (bench->capacity == 0)
+	if (ops == SA)
 	{
-		bench->ops = (char *)ft_calloc(2, sizeof(char));
-		bench->capacity = 2;
-		return ;
-	}	
-	tmp = (char *)ft_calloc(bench->capacity, sizeof(char));
-	if (tmp == NULL)
-		return ;
-	i = bench->total_ops;
-	while (i--)
-		tmp[i] = bench->ops[i]; 
-	free(bench->ops);
-	bench->ops = tmp;
-}
-
-void	ps_add_buffer(t_bench *bench, int op)
-{
-	int	i;
-
-	ps_ops_alloc(bench);
-	i = bench->total_ops++;
-	bench->ops[i] = op;
-}
-
-void	ps_print_op(t_bench *bench)
-{
-	int	i;
-
-	i = 0;
-	while (bench->ops[i])
+		swap(data->a);	
+		ft_putendl_fd("sa", 1);
+		data->bench.sa++;
+	}
+	else if (ops == SB)
 	{
-		if (bench->ops[i] == SA)
-			ft_printf("sa\n");
-		else if (bench->ops[i] == SB)
-			ft_printf("sb\n");
-		else if (bench->ops[i] == PA)
-			ft_printf("pa\n");
-		else if (bench->ops[i] == PB)
-			ft_printf("pb\n");
-		else if (bench->ops[i] == SS)
-			ft_printf("ss\n");
-		else if (bench->ops[i] == RA)
-			ft_printf("ra\n");
-		else if (bench->ops[i] == RB)
-			ft_printf("rb\n");
-		else if (bench->ops[i] == RR)
-			ft_printf("rr\n");
-		else if (bench->ops[i] == RRA)
-			ft_printf("rra\n");
-		else if (bench->ops[i] == RRB)
-			ft_printf("rrb\n");
-		else
-			ft_printf("rrr\n");
-		i++;
+		swap(data->b);	
+		ft_putendl_fd("sb", 1);
+		data->bench.sb++;
+	}
+	else if (ops == SS)
+	{
+		swap(data->a);
+		swap(data->b);
+		ft_putendl_fd("ss", 1);
+		data->bench.ss++;
+	}
+	else if (ops == PA)
+	{
+		push(data->a, data->b);
+		ft_putendl_fd("pa", 1);
+		data->bench.pa++;
 	}
 }
+
+
+static void	division2(t_state *data, t_operation ops)
+{
+	if (ops == PB)
+	{
+		push(data->b, data->a);
+		ft_putendl_fd("pb", 1);
+		data->bench.pb++;
+	}
+	else if (ops == RA)
+	{
+		rotate(data->a);
+		ft_putendl_fd("ra", 1);
+		data->bench.ra++;
+	}
+	else if (ops == RB)
+	{
+		rotate(data->b);
+		ft_putendl_fd("rb", 1);
+		data->bench.rb++;
+	}
+	else if (ops == RR)
+	{
+		rotate(data->a);
+		rotate(data->b);
+		ft_putendl_fd("rr", 1);
+		data->bench.rr++;
+	}
+}
+
+void	operation(t_state *data, t_operation ops)
+{
+	division1(data, ops);
+	division2(data, ops);
+	if (ops == RRA)
+	{
+		re_rotate(data->a);
+		ft_putendl_fd("rra", 1);	
+		data->bench.rra++;
+	}
+	else if (ops == RRB)
+	{
+		re_rotate(data->b);
+		ft_putendl_fd("rrb", 1);
+		data->bench.rrb++;
+	}
+	else if (ops == RRR)
+	{
+		re_rotate(data->a);
+		re_rotate(data->b);
+		ft_putendl_fd("rrr", 1);
+		data->bench.rrr++;
+	}
+	data->bench.total_ops++;
+}
+
