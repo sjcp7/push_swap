@@ -18,7 +18,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 NAME = push_swap
 SRCS = src/push_swap.c src/push_swap_utils.c src/push_swap_utils_two.c src/push_swap_utils_three.c \
-		src/parse.c src/operations.c src/merge_sort.c algorithms/bubble_sort.c  \
+		src/parse.c src/print_bench.c src/operations.c src/merge_sort.c algorithms/bubble_sort.c  \
 		algorithms/insertion_sort.c algorithms/radix_sort.c algorithms/selection_sort.c algorithms/chunk_sort.c
 OBJS = $(SRCS:.c=.o)
 
