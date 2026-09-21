@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:03:44 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/18 13:18:27 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/21 16:54:32 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		ps_next(t_stack *p);
 int		ps_prev(t_stack *p);
 int		ps_strcmp(const char *s1, const char *s2);
 int		ps_atoi(const char *num, long *atoi);
-int		parse(t_state *data, int ac, char *av[]);
+int		parse(t_state *data, int ac, char **av);
 int		ps_sqrt(int num);
 int		compute_strategy(t_state *data);
 int		normalizer(t_stack *a);

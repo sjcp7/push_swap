@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:27:48 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/18 14:45:49 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/21 16:55:04 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	ft_add(t_stack *a, char *num)
 	return (1);
 }
 
-static int	initialization_of_store(t_state *data, int ac, char *av[])
+static int	initialization_of_store(t_state *data, int ac, char **av)
 {
 	int	i;
 
@@ -77,7 +77,7 @@ static int	initialization_of_store(t_state *data, int ac, char *av[])
 	return (i);
 }
 
-static int	fill_array(t_state *data, int ac, int i, char *av[])
+static int	fill_array(t_state *data, int ac, int i, char **av)
 {
 	int		x;
 	char	**vnum;
@@ -103,7 +103,7 @@ static int	fill_array(t_state *data, int ac, int i, char *av[])
 	return (1);
 }
 
-int	parse(t_state *data, int ac, char *av[])
+int	parse(t_state *data, int ac, char **av)
 {
 	int		i;
 

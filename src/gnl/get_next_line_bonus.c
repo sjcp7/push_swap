@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/20 10:17:39 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/08/31 09:45:12 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/21 16:54:56 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	div1(t_list **heap, int fd)
 	return (1);
 }
 
-void	my_born(char buffer[])
+void	my_born(char *buffer)
 {
 	int	i;
 
