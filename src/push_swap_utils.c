@@ -48,7 +48,7 @@ void	ps_realloc(t_stack *p)
 		p->capacity = 1;
 		return ;
 	}
-	tmp = (int *)malloc(p->capacity * sizeof(int));	
+	tmp = (int *)malloc(p->capacity * sizeof(int));
 	if (tmp == NULL)
 		return ;
 	while (i--)
@@ -63,7 +63,7 @@ int	normalizer(t_stack *a)
 	int	x;
 	int	i;
 	int	j;
-		
+
 	cpy = (int *)malloc(sizeof(int) * a->size);
 	if (cpy == NULL)
 		return (0);
@@ -89,7 +89,7 @@ static float	calc_disorder(t_stack *a)
 	int	pairs;
 	int	i;
 	int	j;
-	
+
 	if (!a || a->size == 0)
 		return (-1);
 	pairs = a->size * (a->size - 1) / 2;
@@ -103,7 +103,7 @@ static float	calc_disorder(t_stack *a)
 				mistakes += 1;
 		i++;
 	}
-	return ((float)mistakes /(float)pairs);
+	return ((float) mistakes / (float) pairs);
 }
 
 int	compute_strategy(t_state *data)

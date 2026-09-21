@@ -65,4 +65,3 @@ void	push(t_stack *dst, t_stack *src)
 	dst->nums[dst->head] = tmp;
 	dst->size++;
 }
-

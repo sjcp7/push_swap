@@ -12,6 +12,19 @@
 
 #include "../includes/push_swap.h"
 
+static int	count_bits(int maior)
+{
+	int	i;
+
+	i = 0;
+	while (maior)
+	{
+		i++;
+		maior /= 2;
+	}
+	return (i);
+}
+
 void	radix_sort(t_state *data)
 {
 	int	nbr_bits;
@@ -21,26 +34,19 @@ void	radix_sort(t_state *data)
 
 	if (!data->a || !data->b)
 		return ;
-	nbr_bits = data->a->size;
-	if (!normalizer(data->a))
-		return ;
-	i = 0;
-	while (nbr_bits)
-	{
-		i++;
-		nbr_bits /= 2;
-	}
-	nbr_bits = i;
+	nbr_bits = count_bits(data->a->size);
 	i = 0;
 	while (i < nbr_bits)
 	{
 		bit = 1 << i;
 		x = data->a->size;
 		while (x--)
+		{
 			if (data->a->nums[data->a->head] & bit)
 				operation(data, RA);
 			else
 				operation(data, PB);
+		}
 		while (data->b->size)
 			operation(data, PA);
 		i++;

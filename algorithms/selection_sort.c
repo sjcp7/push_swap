@@ -40,14 +40,37 @@ static int	find_min(t_stack *p)
 	return (index);
 }
 
+void	reverse_op(int *index, int size, t_operation *op)
+{
+	t_operation	reverse;
+
+	if (*op == RA || *op == RB)
+	{
+		reverse = RRB;
+		if (*op == RA)
+			reverse = RRA;
+	}
+	else
+	{
+		reverse = RB;
+		if (*op == RRA)
+			reverse = RA;
+	}
+	if (*index > (size / 2))
+	{
+		*index = size - *index;
+		*op = reverse;
+	}
+}
+
 void	selection_sort(t_state *data)
 {
-	int	index;
-	int	op;
-	int	reps;
-	t_stack *a;
-	t_stack *b;
-	
+	int			index;
+	t_operation	op;
+	int			reps;
+	t_stack		*a;
+	t_stack		*b;
+
 	if (data == NULL)
 		return ;
 	a = data->a;
@@ -59,11 +82,7 @@ void	selection_sort(t_state *data)
 		if (index == -1)
 			return ;
 		op = RA;
-		if (index > (a->size / 2))
-		{
-			op = RRA;
-			index = (a->size - index);
-		}
+		reverse_op(&index, a->size, &op);
 		while (index--)
 			operation(data, op);
 		operation(data, PB);

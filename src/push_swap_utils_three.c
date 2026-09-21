@@ -18,12 +18,12 @@ static int	find_in_front(t_stack *b, int num)
 	int	next;
 	int	maior;
 	int	index;
-	
+
 	index = 0;
 	i = b->head;
 	maior = b->nums[i];
 	while (maior > num)
-	{	
+	{
 		i = (i + 1) % b->size;
 		next = b->nums[i];
 		if (next >= maior || num > next)
@@ -40,18 +40,18 @@ static int	find_in_back(t_stack *b, int num)
 	int	prev;
 	int	menor;
 	int	i;
-	
+
 	index = 0;
 	i = b->head;
 	menor = b->nums[i];
 	while (menor < num)
-	{	
+	{
 		if (i == 0)
 			i = b->size;
 		i = (i - 1) % b->size;
 		prev = b->nums[i];
 		if (prev <= menor || num < prev)
-			return(index);
+			return (index);
 		index++;
 		menor = b->nums[i];
 	}
@@ -60,9 +60,9 @@ static int	find_in_back(t_stack *b, int num)
 
 void	find_posix(t_state *data, int num)
 {
-	int	index;
-	t_operation op;
-	t_stack	*b;
+	int			index;
+	t_operation	op;
+	t_stack		*b;
 
 	b = data->b;
 	if (b->size == 0)
@@ -71,21 +71,13 @@ void	find_posix(t_state *data, int num)
 	{
 		op = RB;
 		index = find_in_front(b, num);
-		if (index > (b->size / 2))
-		{
-			op = RRB;
-			index = (b->size - index);
-		}
+		reverse_op(&index, b->size, &op);
 	}
 	else
 	{
 		op = RRB;
 		index = find_in_back(b, num);
-		if (index > (b->size / 2))
-		{
-			op = RB;
-			index = (b->size - index);
-		}
+		reverse_op(&index, b->size, &op);
 	}
 	while (index--)
 		operation(data, op);
@@ -93,11 +85,11 @@ void	find_posix(t_state *data, int num)
 
 void	find_max(t_state *data)
 {
-	int	index;
-	int	find;
-	int	i;
+	int			index;
+	int			find;
+	int			i;
 	t_operation	op;
-	t_stack *b;
+	t_stack		*b;
 
 	b = data->b;
 	find = b->size - 1;

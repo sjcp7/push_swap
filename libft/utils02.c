@@ -35,7 +35,8 @@ int	my_printfloat(float n, t_format format)
 {
 	long	intpart;
 	long	decimal_part;
-		
+	int		total;
+
 	intpart = n;
 	n -= intpart;
 	n *= 100000;
@@ -44,8 +45,12 @@ int	my_printfloat(float n, t_format format)
 		decimal_part = arredondar(decimal_part, format.precision);
 	ft_bzero(&format, sizeof(t_format));
 	format.precision = -1;
-	return (my_printnumber(intpart, format) + my_printchar('.', format) + my_printnumber(decimal_part, format));
+	total = my_printnumber(intpart, format);
+	total += my_printchar('.', format);
+	total += my_printnumber(decimal_part, format);
+	return (total);
 }
+
 static void	division_1(const char **format, t_format *flags, va_list *va)
 {
 	if (**format == '*')

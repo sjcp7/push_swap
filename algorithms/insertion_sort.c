@@ -10,13 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/push_swap.h"
 
 void	insertion_sort(t_state *data)
 {
-	t_stack *a;
-	t_stack *b;
+	t_stack	*a;
+	t_stack	*b;
 
 	a = data->a;
 	b = data->b;
@@ -29,4 +28,3 @@ void	insertion_sort(t_state *data)
 	while (b->size)
 		operation(data, PA);
 }
-

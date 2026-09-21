@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap_utils_two.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/21 11:09:57 by ljanuari          #+#    #+#             */
+/*   Updated: 2026/09/21 11:10:13 by ljanuari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
@@ -7,7 +17,7 @@ int	ps_prev(t_stack *p)
 	if (p == NULL || p->size == 0)
 		return (0);
 	if (p->head == 0)
-		return (p->size - 1); 
+		return (p->size - 1);
 	return ((p->head - 1) % p->size);
 }
 
@@ -18,17 +28,17 @@ int	ps_next(t_stack *p)
 	return ((p->head + 1) % p->size);
 }
 
-static void	division1(t_state *data, t_operation ops)
+static void	make_operations_1(t_state *data, t_operation ops)
 {
 	if (ops == SA)
 	{
-		swap(data->a);	
+		swap(data->a);
 		ft_putendl_fd("sa", 1);
 		data->bench.sa++;
 	}
 	else if (ops == SB)
 	{
-		swap(data->b);	
+		swap(data->b);
 		ft_putendl_fd("sb", 1);
 		data->bench.sb++;
 	}
@@ -47,8 +57,7 @@ static void	division1(t_state *data, t_operation ops)
 	}
 }
 
-
-static void	division2(t_state *data, t_operation ops)
+static void	make_operations_2(t_state *data, t_operation ops)
 {
 	if (ops == PB)
 	{
@@ -79,12 +88,12 @@ static void	division2(t_state *data, t_operation ops)
 
 void	operation(t_state *data, t_operation ops)
 {
-	division1(data, ops);
-	division2(data, ops);
+	make_operations_1(data, ops);
+	make_operations_2(data, ops);
 	if (ops == RRA)
 	{
 		re_rotate(data->a);
-		ft_putendl_fd("rra", 1);	
+		ft_putendl_fd("rra", 1);
 		data->bench.rra++;
 	}
 	else if (ops == RRB)
@@ -102,4 +111,3 @@ void	operation(t_state *data, t_operation ops)
 	}
 	data->bench.total_ops++;
 }
-

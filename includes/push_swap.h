@@ -25,7 +25,7 @@ typedef struct s_stack
 
 typedef struct s_bench
 {
-	float		disorder;
+	float	disorder;
 	int		visible;
 	int		strategy;
 	int		adaptive;
@@ -45,8 +45,8 @@ typedef struct s_bench
 
 typedef struct s_state
 {
-    	t_stack *a;
-    	t_stack *b;
+	t_stack	*a;
+	t_stack	*b;
 	t_bench	bench;
 }	t_state;
 
@@ -68,11 +68,14 @@ typedef enum s_operation
 int		ps_abort(t_state *data);
 int		ps_next(t_stack *p);
 int		ps_prev(t_stack *p);
+int		ps_strcmp(const char *s1, const char *s2);
+int		ps_atoi(const char *num, long *atoi);
 int		parse(t_state *data, int ac, char *av[]);
 int		ps_sqrt(int num);
 int		compute_strategy(t_state *data);
-void    ps_realloc(t_stack *p);
-int	normalizer(t_stack *a);
+int		normalizer(t_stack *a);
+void	reverse_op(int *index, int size, t_operation *op);
+void	ps_realloc(t_stack *p);
 void	ps_print_bench(t_bench bench);
 void	ps_merge_sort(int *nums, int l, int r);
 void	find_posix(t_state *data, int num);
