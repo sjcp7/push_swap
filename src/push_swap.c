@@ -6,13 +6,15 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:20:05 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/21 11:06:27 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/21 11:48:07 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int	main(int ac, char *av[])
+
+
+int	main(int ac, char **av)
 {
 	t_state	data;
 
