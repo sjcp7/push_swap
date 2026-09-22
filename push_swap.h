@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:03:44 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/21 16:54:32 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/22 15:44:13 by ljanuari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_state
 
 typedef enum s_operation
 {
+	NONE = 0,
 	SA,
 	SB,
 	SS,
@@ -65,6 +66,13 @@ typedef enum s_operation
 	RRR
 }	t_operation;
 
+typedef struct s_ops_buff
+{
+	t_operation	*ops;
+	int			size;
+	int			capacity;
+}	t_ops_buff;
+
 int		ps_abort(t_state *data);
 int		ps_next(t_stack *p);
 int		ps_prev(t_stack *p);
@@ -74,6 +82,8 @@ int		parse(t_state *data, int ac, char **av);
 int		ps_sqrt(int num);
 int		compute_strategy(t_state *data);
 int		normalizer(t_stack *a);
+int		buffer_push(t_ops_buff *buffer, t_operation op);
+void	buffer_flush(t_ops_buff *buffer);
 void	reverse_op(int *index, int size, t_operation *op);
 void	ps_realloc(t_stack *p);
 void	ps_print_bench(t_bench bench);
@@ -85,7 +95,6 @@ void	rotate(t_stack *p);
 void	re_rotate(t_stack *p);
 void	push(t_stack *dst, t_stack *src);
 // my implementations
-void	bubble_sort(t_state *data);
 void	selection_sort(t_state *data);
 void	insertion_sort(t_state *data);
 void	chunk_sort(t_state *data);
