@@ -90,25 +90,23 @@ static int	initialization_of_store(t_state *data, int ac, char **av)
 static int	fill_array(t_state *data, int ac, int i, char **av)
 {
 	int		x;
+	int		ok;
 	char	**vnum;
 
 	while (i < ac)
 	{
-		vnum = ft_split(av[i], ' ');
+		vnum = ft_split(av[i++], ' ');
+		ok = (vnum[0] != NULL);
 		x = 0;
 		while (vnum[x])
 		{
-			if (!ft_add(data->a, vnum[x]))
-			{
-				while (vnum[x])
-					free(vnum[x++]);
-				free(vnum);
-				return (ps_abort(data));
-			}
+			if (ok && !ft_add(data->a, vnum[x]))
+				ok = 0;
 			free(vnum[x++]);
 		}
 		free(vnum);
-		i++;
+		if (!ok)
+			return (ps_abort(data));
 	}
 	return (1);
 }
