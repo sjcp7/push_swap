@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 15:27:48 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/22 12:44:09 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/22 19:53:19 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ static void	selecter(t_bench *bench, char *av)
 static int	ft_add(t_stack *a, char *num)
 {
 	long	atoi;
-	int		sign;
 	int		i;
 
-	sign = 1;
 	atoi = 0;
 	if (num == NULL || a == NULL)
 		return (0);
