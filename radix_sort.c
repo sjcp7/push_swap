@@ -34,7 +34,7 @@ void	radix_sort(t_state *data)
 
 	if (!data->a || !data->b)
 		return ;
-	nbr_bits = count_bits(data->a->size);
+	nbr_bits = count_bits(data->a->size - 1);
 	i = 0;
 	while (i < nbr_bits)
 	{
