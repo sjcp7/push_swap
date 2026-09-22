@@ -15,7 +15,6 @@
 int	ps_atoi(const char *num, long *atoi)
 {
 	int		sign;
-	int		c;
 
 	sign = 1;
 	*atoi = 0;
@@ -25,10 +24,11 @@ int	ps_atoi(const char *num, long *atoi)
 			sign = -1;
 		num++;
 	}
-	while ((*num >= '0' && *num <= '9'))
+	if (!ft_isdigit(*num))
+		return (0);
+	while (ft_isdigit(*num))
 	{
-		c = (*num - '0');
-		*atoi = (*atoi * 10) + c;
+		*atoi = (*atoi * 10) + (*num - '0');
 		if (sign == 1 && *atoi > 2147483647)
 			return (0);
 		if (sign == -1 && (*atoi * -1) < -2147483648)
