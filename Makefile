@@ -21,25 +21,35 @@ SRCS = push_swap.c push_swap_utils.c push_swap_utils_two.c push_swap_utils_three
 		insertion_sort.c radix_sort.c selection_sort.c chunk_sort.c
 OBJS = $(SRCS:.c=.o)
 
+BONUS = checker
+BONUS_SRCS = checker_bonus.c checker_parser_bonus.c vector_bonus.c \
+		operations_bonus.c get_next_line_bonus.c get_next_line_utils_bonus.c
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
+
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -I $(LIBFT_DIR) $^ $(LIBFT) -o $(NAME) 
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-%.o: %.c libft
-	$(CC) $(CFLAGS) -I $(LIBFT_DIR) -c $< -o $@
+bonus: $(BONUS)
 
-libft:
+$(BONUS): $(LIBFT) $(BONUS_OBJS)
+	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(BONUS)
+
+$(LIBFT):
 	make -C $(LIBFT_DIR)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -I $(LIBFT_DIR) -c $< -o $@
 
 clean:
 	make -C $(LIBFT_DIR) clean
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
-	rm -f $(NAME)
+	rm -f $(NAME) $(BONUS)
 
 re: fclean all
 
-.PHONY: all clean fclean re libft
+.PHONY: all bonus clean fclean re
