@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_bench.c                                      :+:      :+:    :+:   */
+/*   print_bench_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 12:39:50 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/21 12:39:55 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/22 12:26:50 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/push_swap.h"
+
+#include "../includes/push_swap_bonus.h"
 
 static int	ps_arredondar(int num, int precision)
 {

@@ -3,28 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 14:16:39 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/08/26 16:27:20 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/22 12:23:59 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*ft_realloc(char *s, int ps, int *size)
+char	*ft_realloc(char *s, t_helper *pa)
 {
 	char	*dup;
+	int		ps;
 
-	if (size == 0)
+	if (pa->readt < pa->save - pa->i)
+		return (s);
+	if (pa->save == 1)
 		return (NULL);
-	*size *= 2;
-	dup = (char *) malloc((*size) * sizeof(char));
+	pa->save *= 2;
+	dup = (char *) malloc((pa->save) * sizeof(char));
 	if (!dup)
-	{
-		free(s);
 		return (NULL);
-	}
+	ps = pa->i;
 	dup[ps] = 0;
 	while (ps--)
 		dup[ps] = s[ps];
@@ -32,83 +33,63 @@ char	*ft_realloc(char *s, int ps, int *size)
 	return (dup);
 }
 
-t_list	*remember(t_list *heap, char **line, int fd)
+int	remember(char **line, char *buffer)
 {
-	t_list	*pa;
+	int	len;
+	int	i;
 
+	i = 0;
 	*line = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (*line == NULL)
-		return (NULL);
-	my_born(*line);
-	pa = check(heap, fd);
-	if (pa == NULL)
+		return (-1);
+	len = 0;
+	while (buffer[i] && buffer[i] != '\n')
+		(*line)[len++] = buffer[i++];
+	(*line)[len] = '\0';
+	if (buffer[i] == '\n')
 	{
-		pa = (t_list *) malloc(sizeof(t_list));
-		if (pa == NULL)
-			return (NULL);
-		pa->fd = fd;
-		my_born(pa->buffer);
-		pa->next = NULL;
-		while (heap->next)
-			heap = heap->next;
-		heap->next = pa;
-		pa->i = 0;
+		(*line)[len++] = '\n';
+		(*line)[len] = '\0';
+		i++;
+		len = -500;
 	}
-	else
-		pa->i = buffer_move(*line, pa->buffer, 0, BUFFER_SIZE + 1);
-	pa->save = BUFFER_SIZE + 1;
-	return (pa);
+	buffer_move(buffer, i, BUFFER_SIZE);
+	return (len);
 }
 
-int	buffer_move(char *dest, char *buff, int start, int readt)
+void	buffer_move(char *buff, int start, int readt)
 {
 	int	i;
+
+	i = 0;
+	while (start <= readt && buff[start])
+		buff[i++] = buff[start++];
+	while (buff[i])
+		buff[i++] = 0;
+}
+
+int	ft_strllcat(t_helper *pa, char *src)
+{
 	int	x;
 	int	aux;
 
-	i = 0;
-	if (!dest || !buff || readt <= 0)
+	if (!(pa->line) || !src || pa->readt < 0)
 		return (-1);
-	aux = readt;
-	while (readt-- && buff[i] && buff[i] != '\n')
-		dest[start++] = buff[i++];
-	dest[start] = 0;
-	if (buff[i] == '\n')
+	aux = pa->readt;
+	pa->line = ft_realloc(pa->line, pa);
+	if (!pa->line)
+		return (-1);
+	x = 0;
+	while (aux-- && src[x] && src[x] != '\n')
+		(pa->line)[(pa->i)++] = src[x++];
+	(pa->line)[pa->i] = '\0';
+	if (src[x] == '\n')
 	{
-		i++;
-		dest[start++] = '\n';
-		dest[start] = 0;
-		x = 0;
-		while (i < aux && buff[i])
-			buff[x++] = buff[i++];
-		while (x < BUFFER_SIZE && buff[x])
-			buff[x++] = 0;
-		start = -500;
+		(pa->line)[pa->i++] = '\n';
+		(pa->line)[pa->i] = '\0';
+		pa->i = -500;
+		++x;
 	}
-	return (start);
-}
-
-void	ft_lstremove(t_list **heap, int fd)
-{
-	t_list	*ptr;
-	t_list	*proximo;
-
-	ptr = *heap;
-	if (ptr == NULL)
-		return ;
-	if (ptr->fd == fd)
-	{
-		*heap = (*heap)->next;
-		free(ptr);
-		return ;
-	}
-	proximo = ptr->next;
-	while (proximo && proximo->fd != fd)
-	{
-		ptr = proximo;
-		proximo = proximo->next;
-	}
-	if (proximo)
-		ptr->next = proximo->next;
-	free(proximo);
+	buffer_move(src, x, pa->readt);
+	return (pa->i);
 }
