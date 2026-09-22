@@ -12,8 +12,18 @@
 
 #include "push_swap.h"
 
-static void	selecter(t_bench *bench, char *av)
+static int	selecter(t_bench *bench, char *av, int *selected)
 {
+	if (ps_strcmp("--bench", av) == 0)
+	{
+		if (bench->visible)
+			return (0);
+		bench->visible = 1;
+		return (1);
+	}
+	if (*selected)
+		return (0);
+	*selected = 1;
 	bench->adaptive = 0;
 	if (ps_strcmp("--simple", av) == 0)
 		bench->strategy = 1;
@@ -24,7 +34,8 @@ static void	selecter(t_bench *bench, char *av)
 	else if (ps_strcmp("--adaptive", av) == 0)
 		bench->adaptive = 1;
 	else
-		bench->strategy = -1;
+		return (0);
+	return (1);
 }
 
 static int	ft_add(t_stack *a, char *num)
@@ -52,6 +63,7 @@ static int	ft_add(t_stack *a, char *num)
 static int	initialization_of_store(t_state *data, int ac, char **av)
 {
 	int	i;
+	int	selected;
 
 	i = 1;
 	ft_bzero(data, sizeof(t_state));
@@ -66,11 +78,11 @@ static int	initialization_of_store(t_state *data, int ac, char **av)
 	ft_bzero(data->b, sizeof(t_stack));
 	data->b->nums = NULL;
 	data->bench.adaptive = 1;
-	if (ps_strcmp("--bench", av[i]) == 0)
-		data->bench.visible = i++;
-	if (ac - i >= 1 && ft_strncmp("--", av[i], 2) == 0)
-		selecter(&data->bench, av[i++]);
-	if (ac - i < 1 || data->bench.strategy == -1)
+	selected = 0;
+	while (i < ac && ft_strncmp("--", av[i], 2) == 0)
+		if (!selecter(&data->bench, av[i++], &selected))
+			return (ps_abort(data));
+	if (ac - i < 1)
 		return (ps_abort(data));
 	return (i);
 }
