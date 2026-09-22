@@ -12,39 +12,15 @@
 
 #include "push_swap.h"
 
-static int	ps_arredondar(int num, int precision)
-{
-	int	pivot;
-
-	pivot = 1;
-	while (precision--)
-		pivot *= 10;
-	if (pivot == 1)
-		return (0);
-	while (num > pivot)
-	{
-		if ((num % 10) >= 5)
-			num = (num / 10) + 1;
-		else
-			num = num / 10;
-	}
-	return (num);
-}
-
 static void	print_float(float disorder)
 {
-	long	int_part;
-	long	decimal_part;
+	long	hundredths;
 
-	disorder *= 100;
-	int_part = disorder;
-	disorder -= int_part;
-	disorder *= 100000;
-	decimal_part = disorder;
-	decimal_part = ps_arredondar(decimal_part, 2);
-	ft_putnbr_fd(int_part, 2);
+	hundredths = (long)(disorder * 10000.0 + 0.5);
+	ft_putnbr_fd(hundredths / 100, 2);
 	ft_putchar_fd('.', 2);
-	ft_putnbr_fd(decimal_part, 2);
+	ft_putchar_fd(hundredths % 100 / 10 + '0', 2);
+	ft_putchar_fd(hundredths % 10 + '0', 2);
 }
 
 static char	*str_strategy(t_bench bench)
