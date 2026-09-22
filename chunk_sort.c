@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   chunk_sort_bonus.c                                 :+:      :+:    :+:   */
+/*   chunk_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/16 12:20:21 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/22 12:22:55 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/22 12:44:09 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap_bonus.h"
+#include "push_swap.h"
 
 static void	find_k_distance(t_stack *a, int *front, int *back, int k)
 {

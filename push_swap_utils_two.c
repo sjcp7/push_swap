@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_utils_two.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 11:09:57 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/21 11:10:13 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/22 12:44:09 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "push_swap.h"
 
 int	ps_prev(t_stack *p)
 {

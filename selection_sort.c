@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   selection_sort_bonus.c                             :+:      :+:    :+:   */
+/*   selection_sort.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 10:54:48 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/22 12:23:28 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/22 12:44:09 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap_bonus.h"
+#include "push_swap.h"
 
 static int	find_min(t_stack *p)
 {

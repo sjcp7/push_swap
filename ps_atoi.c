@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_atoi_bonus.c                                    :+:      :+:    :+:   */
+/*   ps_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 09:07:16 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/22 12:27:00 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/22 12:44:09 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap_bonus.h"
+#include "push_swap.h"
 
 int	ps_atoi(const char *num, long *atoi)
 {

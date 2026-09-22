@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   radix_sort_bonus.c                                 :+:      :+:    :+:   */
+/*   radix_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/16 12:24:32 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/22 12:23:23 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/22 12:44:09 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap_bonus.h"
+#include "push_swap.h"
 
 static int	count_bits(int maior)
 {

@@ -6,29 +6,28 @@
 #    By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/18 10:57:16 by samupedr          #+#    #+#              #
-#    Updated: 2026/09/21 16:55:56 by samupedr         ###   ########.fr        #
+#    Updated: 2026/09/22 12:59:17 by samupedr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-INCLUDE_DIR = includes
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 NAME = push_swap
-SRCS = src/push_swap.c src/push_swap_utils.c src/push_swap_utils_two.c src/push_swap_utils_three.c \
-		src/ps_atoi.c src/ps_strcmp.c src/parse.c src/print_bench.c src/operations.c src/merge_sort.c \
-		algorithms/insertion_sort.c algorithms/radix_sort.c algorithms/selection_sort.c algorithms/chunk_sort.c
+SRCS = push_swap.c push_swap_utils.c push_swap_utils_two.c push_swap_utils_three.c \
+		ps_atoi.c ps_strcmp.c parse.c print_bench.c operations.c merge_sort.c \
+		insertion_sort.c radix_sort.c selection_sort.c chunk_sort.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) $^ $(LIBFT) -o $(NAME) 
+	$(CC) $(CFLAGS) -I $(LIBFT_DIR) $^ $(LIBFT) -o $(NAME) 
 
 %.o: %.c libft
-	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(LIBFT_DIR) -c $< -o $@
 
 libft:
 	make -C $(LIBFT_DIR)

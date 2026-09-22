@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_utils_three.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ljanuari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 12:27:11 by ljanuari          #+#    #+#             */
-/*   Updated: 2026/09/18 14:59:59 by ljanuari         ###   ########.fr       */
+/*   Updated: 2026/09/22 12:44:09 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "push_swap.h"
 
 static int	find_in_front(t_stack *b, int num)
 {
