@@ -60,7 +60,6 @@ void	ps_realloc(t_stack *p)
 int	normalizer(t_stack *a)
 {
 	int	*cpy;
-	int	x;
 	int	i;
 	int	j;
 
@@ -69,15 +68,13 @@ int	normalizer(t_stack *a)
 		return (0);
 	ft_memmove(cpy, a->nums, (a->size * sizeof(int)));
 	ps_merge_sort(cpy, 0, a->size - 1);
-	x = a->size;
-	j = 0;
-	while (j < x)
+	i = 0;
+	while (i < a->size)
 	{
-		i = -1;
-		while (++i < x)
-			if (a->nums[i] == cpy[j])
-				break ;
-		a->nums[i] = j++;
+		j = 0;
+		while (cpy[j] != a->nums[i])
+			j++;
+		a->nums[i++] = j;
 	}
 	free(cpy);
 	return (1);
