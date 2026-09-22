@@ -87,8 +87,8 @@ static float	calc_disorder(t_stack *a)
 	int	i;
 	int	j;
 
-	if (!a || a->size == 0)
-		return (-1);
+	if (!a || a->size < 2)
+		return (0);
 	pairs = a->size * (a->size - 1) / 2;
 	mistakes = 0;
 	i = 0;
