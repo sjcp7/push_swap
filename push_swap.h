@@ -75,6 +75,7 @@ typedef struct s_state
 }	t_state;
 
 int			ps_abort(t_state *data);
+void		ps_free(t_state *data);
 int			ps_next(t_stack *p);
 int			ps_prev(t_stack *p);
 int			ps_strcmp(const char *s1, const char *s2);
@@ -94,9 +95,9 @@ void		rotate(t_stack *p);
 void		re_rotate(t_stack *p);
 void		push(t_stack *dst, t_stack *src);
 // my implementations
-void	selection_sort(t_state *data);
-void	chunk_sort(t_state *data);
-void	radix_sort(t_state *data);
+int			selection_sort(t_state *data);
+int			chunk_sort(t_state *data);
+int			radix_sort(t_state *data);
 //
 int			operation(t_state *data, t_operation ops);
 // BUFFER_MANAGER FUNCTIONS

@@ -93,7 +93,5 @@ int	operation(t_state *data, t_operation ops)
 		re_rotate(data->a);
 		re_rotate(data->b);
 	}
-	if (buffer_push(&data->buffer, ops) == 0)
-		return (ps_abort(data));
-	return (1);
+	return (buffer_push(&data->buffer, ops));
 }

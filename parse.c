@@ -68,13 +68,11 @@ static int	initialization_of_store(t_state *data, int ac, char **av)
 	data->a = (t_stack *) malloc(sizeof(t_stack));
 	if (data->a == NULL)
 		return (ps_abort(data));
+	ft_bzero(data->a, sizeof(t_stack));
 	data->b = (t_stack *) malloc(sizeof(t_stack));
 	if (data->b == NULL)
 		return (ps_abort(data));
-	ft_bzero(data->a, sizeof(t_stack));
-	data->a->nums = NULL;
 	ft_bzero(data->b, sizeof(t_stack));
-	data->b->nums = NULL;
 	data->bench.adaptive = 1;
 	selected = 0;
 	while (i < ac && ft_strncmp("--", av[i], 2) == 0)

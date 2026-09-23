@@ -88,13 +88,14 @@ static int	push_min(t_state *data)
 	return (1);
 }
 
-void	selection_sort(t_state *data)
+int	selection_sort(t_state *data)
 {
 	if (data == NULL)
-		return ;
+		return (0);
 	if (push_min(data) == 0)
-		return ;
+		return (0);
 	while (data->b->size)
 		if (operation(data, PA) == 0)
-			return ;
+			return (0);
+	return (1);
 }

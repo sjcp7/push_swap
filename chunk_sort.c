@@ -102,16 +102,17 @@ static int	push_chunks(t_state *data, int chunks)
 	return (1);
 }
 
-void	chunk_sort(t_state *data)
+int	chunk_sort(t_state *data)
 {
 	int	chunks;
 
 	chunks = (ps_sqrt(data->a->size) * 3) / 2;
 	if (push_chunks(data, chunks) == 0)
-		return ;
+		return (0);
 	if (!find_max(data))
-		return ;
+		return (0);
 	while (data->b->size)
 		if (operation(data, PA) == 0)
-			return ;
+			return (0);
+	return (1);
 }

@@ -15,28 +15,21 @@
 static int	buffer_realloc(t_ops_buff *buffer)
 {
 	int			i;
+	int			capacity;
 	t_operation	*tmp;
 
-	buffer->capacity *= 2;
-	if (buffer->capacity == 0)
-	{
-		buffer->ops = (t_operation *) malloc(sizeof(t_operation));
-		buffer->capacity = 1;
-		if (buffer->ops == NULL)
-			return (0);
-		return (1);
-	}
-	i = buffer->size;
-	tmp = (t_operation *) malloc(buffer->capacity * sizeof(t_operation));
+	capacity = buffer->capacity * 2;
+	if (capacity == 0)
+		capacity = 1;
+	tmp = (t_operation *) malloc(capacity * sizeof(t_operation));
 	if (tmp == NULL)
-	{
-		free(buffer->ops);
 		return (0);
-	}
+	i = buffer->size;
 	while (i--)
 		tmp[i] = buffer->ops[i];
 	free(buffer->ops);
 	buffer->ops = tmp;
+	buffer->capacity = capacity;
 	return (1);
 }
 

@@ -14,21 +14,7 @@
 
 int	ps_abort(t_state *data)
 {
-	if (data != NULL)
-	{
-		if (data->a != NULL)
-		{
-			if (data->a->nums)
-				free(data->a->nums);
-			free(data->a);
-		}
-		if (data->b != NULL)
-		{
-			if (data->b->nums)
-				free(data->b->nums);
-			free(data->b);
-		}
-	}
+	ps_free(data);
 	write(2, "Error\n", 6);
 	return (0);
 }

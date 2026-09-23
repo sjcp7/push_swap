@@ -25,33 +25,38 @@ static int	count_bits(int maior)
 	return (i);
 }
 
-void	radix_sort(t_state *data)
+static int	radix_pass(t_state *data, int bit)
 {
-	int	nbr_bits;
 	int	valid;
 	int	x;
+
+	x = data->a->size;
+	while (x--)
+	{
+		if (data->a->nums[data->a->head] & bit)
+			valid = operation(data, RA);
+		else
+			valid = operation(data, PB);
+		if (valid == 0)
+			return (0);
+	}
+	while (data->b->size)
+		if (operation(data, PA) == 0)
+			return (0);
+	return (1);
+}
+
+int	radix_sort(t_state *data)
+{
+	int	nbr_bits;
 	int	i;
-	int	bit;
 
 	if (!data->a || !data->b)
-		return ;
+		return (0);
 	nbr_bits = count_bits(data->a->size - 1);
 	i = 0;
 	while (i < nbr_bits)
-	{
-		bit = 1 << i++;
-		x = data->a->size;
-		while (x--)
-		{
-			if (data->a->nums[data->a->head] & bit)
-				valid = operation(data, RA);
-			else
-				valid = operation(data, PB);
-			if (valid == 0)
-				return ;
-		}
-		while (data->b->size)
-			if (operation(data, PA) == 0)
-				return ;
-	}
+		if (!radix_pass(data, 1 << i++))
+			return (0);
+	return (1);
 }
