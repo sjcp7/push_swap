@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	fill_array(int *array, int *nums, int n, int i)
+static void	fill_array(int *array, int *nums, int n, int i)
 {
 	int	k;
 
