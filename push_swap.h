@@ -87,7 +87,7 @@ void	buffer_flush(t_ops_buff *buffer);
 void	reverse_op(int *index, int size, t_operation *op);
 int		ps_realloc(t_stack *p);
 void	ps_print_bench(t_bench bench);
-void	ps_merge_sort(int *nums, int l, int r);
+int		ps_merge_sort(int *nums, int l, int r);
 void	find_posix(t_state *data, int num);
 void	find_max(t_state *data);
 void	swap(t_stack *pilha);

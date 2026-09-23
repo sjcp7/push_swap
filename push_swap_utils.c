@@ -66,7 +66,11 @@ int	normalizer(t_stack *a)
 	if (cpy == NULL)
 		return (0);
 	ft_memmove(cpy, a->nums, (a->size * sizeof(int)));
-	ps_merge_sort(cpy, 0, a->size - 1);
+	if (!ps_merge_sort(cpy, 0, a->size - 1))
+	{
+		free(cpy);
+		return (0);
+	}
 	i = 0;
 	while (i < a->size)
 	{
