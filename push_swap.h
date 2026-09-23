@@ -96,7 +96,6 @@ void	re_rotate(t_stack *p);
 void	push(t_stack *dst, t_stack *src);
 // my implementations
 void	selection_sort(t_state *data);
-void	insertion_sort(t_state *data);
 void	chunk_sort(t_state *data);
 void	radix_sort(t_state *data);
 //
