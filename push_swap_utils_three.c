@@ -58,7 +58,7 @@ static int	find_in_back(t_stack *b, int num)
 	return (index);
 }
 
-void	find_posix(t_state *data, int num)
+int	find_posix(t_state *data, int num)
 {
 	int			index;
 	t_operation	op;
@@ -66,7 +66,7 @@ void	find_posix(t_state *data, int num)
 
 	b = data->b;
 	if (b->size == 0)
-		return ;
+		return (1);
 	if (b->nums[b->head] > num)
 	{
 		op = RB;
@@ -80,10 +80,14 @@ void	find_posix(t_state *data, int num)
 		reverse_op(&index, b->size, &op);
 	}
 	while (index--)
-		operation(data, op);
+	{
+		if (operation(data, op) == 0)
+			return (0);
+	}
+	return (1);
 }
 
-void	find_max(t_state *data)
+int	find_max(t_state *data)
 {
 	int			index;
 	int			find;
@@ -107,7 +111,9 @@ void	find_max(t_state *data)
 		index = (b->size - index);
 	}
 	while (index--)
-		operation(data, op);
+		if (operation(data, op) == 0)
+			return (0);
+	return (1);
 }
 
 int	ps_sqrt(int num)

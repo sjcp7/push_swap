@@ -60,7 +60,7 @@ static int	choose_way(t_stack *a, int front, int back, t_operation *op)
 	return (index);
 }
 
-static void	move_k(t_state *data, int k)
+static int	move_k(t_state *data, int k)
 {
 	int			front_index;
 	int			back_index;
@@ -70,19 +70,19 @@ static void	move_k(t_state *data, int k)
 	find_k_distance(data->a, &front_index, &back_index, k);
 	index = choose_way(data->a, front_index, back_index, &op);
 	while (index--)
-		operation(data, op);
+		if (operation(data, op) == 0)
+			return (0);
+	return (1);
 }
 
-void	chunk_sort(t_state *data)
+static int	push_chunks(t_state *data, int chunks)
 {
-	t_stack	*a;
-	int		i;
-	int		chunks;
 	int		k;
+	int		i;
+	t_stack	*a;
 
-	a = data->a;
-	chunks = (ps_sqrt(a->size) * 3) / 2;
 	k = chunks;
+	a = data->a;
 	while (a->size)
 	{
 		i = chunks;
@@ -90,13 +90,28 @@ void	chunk_sort(t_state *data)
 		{
 			if (a->size == 0)
 				break ;
-			move_k(data, k);
-			find_posix(data, a->nums[a->head]);
-			operation(data, PB);
+			if (!move_k(data, k))
+				return (0);
+			if (!find_posix(data, a->nums[a->head]))
+				return (0);
+			if (operation(data, PB) == 0)
+				return (0);
 		}
 		k += chunks;
 	}
-	find_max(data);
+	return (1);
+}
+
+void	chunk_sort(t_state *data)
+{
+	int	chunks;
+
+	chunks = (ps_sqrt(data->a->size) * 3) / 2;
+	if (push_chunks(data, chunks) == 0)
+		return ;
+	if (!find_max(data))
+		return ;
 	while (data->b->size)
-		operation(data, PA);
+		if (operation(data, PA) == 0)
+			return ;
 }

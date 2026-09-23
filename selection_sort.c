@@ -20,7 +20,7 @@ static int	find_min(t_stack *p)
 	int	reps;
 	int	menor;
 
-	if (p == NULL || p->size == 0)
+	if (p->size == 0)
 		return (-1);
 	i = p->head;
 	menor = p->nums[i];
@@ -63,30 +63,38 @@ void	reverse_op(int *index, int size, t_operation *op)
 	}
 }
 
-void	selection_sort(t_state *data)
+static int	push_min(t_state *data)
 {
 	int			index;
 	t_operation	op;
 	int			reps;
 	t_stack		*a;
-	t_stack		*b;
 
-	if (data == NULL)
-		return ;
 	a = data->a;
-	b = data->b;
 	reps = a->size;
 	while (--reps)
 	{
 		index = find_min(a);
 		if (index == -1)
-			return ;
+			break ;
 		op = RA;
 		reverse_op(&index, a->size, &op);
 		while (index--)
-			operation(data, op);
-		operation(data, PB);
+			if (operation(data, op) == 0)
+				return (0);
+		if (operation(data, PB) == 0)
+			return (0);
 	}
-	while (b->size)
-		operation(data, PA);
+	return (1);
+}
+
+void	selection_sort(t_state *data)
+{
+	if (data == NULL)
+		return ;
+	if (push_min(data) == 0)
+		return ;
+	while (data->b->size)
+		if (operation(data, PA) == 0)
+			return ;
 }
