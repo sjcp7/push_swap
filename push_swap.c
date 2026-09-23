@@ -12,20 +12,6 @@
 
 #include "push_swap.h"
 
-static int	is_sorted(t_stack *a)
-{
-	int	i;
-
-	i = 1;
-	while (i < a->size)
-	{
-		if (a->nums[i - 1] > a->nums[i])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 int	main(int ac, char **av)
 {
 	t_state	data;
