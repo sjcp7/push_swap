@@ -18,7 +18,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 NAME = push_swap
 SRCS = push_swap.c push_swap_utils.c push_swap_utils_two.c push_swap_utils_three.c \
 		ps_atoi.c ps_strcmp.c parse.c print_bench.c operations.c merge_sort.c \
-		radix_sort.c selection_sort.c chunk_sort.c
+		radix_sort.c selection_sort.c chunk_sort.c buffer_manager.c buffer_manager_utils.c
 OBJS = $(SRCS:.c=.o)
 HEADERS = push_swap.h $(LIBFT_DIR)/libft.h
 
