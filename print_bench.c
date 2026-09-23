@@ -37,9 +37,9 @@ static char	*str_strategy(t_bench bench)
 	if (bench.strategy == 1)
 		return ("Simple / O(n²)");
 	if (bench.strategy == 2)
-		return ("medium / O(n√n)");
+		return ("Medium / O(n√n)");
 	if (bench.strategy == 3)
-		return ("complex / O(nlogn)");
+		return ("Complex / O(nlogn)");
 	return (NULL);
 }
 
