@@ -85,7 +85,7 @@ int		normalizer(t_stack *a);
 int		buffer_push(t_ops_buff *buffer, t_operation op);
 void	buffer_flush(t_ops_buff *buffer);
 void	reverse_op(int *index, int size, t_operation *op);
-void	ps_realloc(t_stack *p);
+int		ps_realloc(t_stack *p);
 void	ps_print_bench(t_bench bench);
 void	ps_merge_sort(int *nums, int l, int r);
 void	find_posix(t_state *data, int num);

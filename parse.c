@@ -46,9 +46,7 @@ static int	ft_add(t_stack *a, char *num)
 	atoi = 0;
 	if (num == NULL || a == NULL)
 		return (0);
-	if (a->size >= a->capacity)
-		ps_realloc(a);
-	if (a->nums == NULL)
+	if (a->size >= a->capacity && !ps_realloc(a))
 		return (0);
 	if (ps_atoi(num, &atoi) == 0)
 		return (0);

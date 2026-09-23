@@ -33,28 +33,27 @@ int	ps_abort(t_state *data)
 	return (0);
 }
 
-void	ps_realloc(t_stack *p)
+int	ps_realloc(t_stack *p)
 {
 	int	*tmp;
+	int	capacity;
 	int	i;
 
 	if (p == NULL)
-		return ;
-	p->capacity *= 2;
-	i = p->size;
-	if (p->capacity == 0)
-	{
-		p->nums = (int *)malloc(sizeof(int));
-		p->capacity = 1;
-		return ;
-	}
-	tmp = (int *)malloc(p->capacity * sizeof(int));
+		return (0);
+	capacity = p->capacity * 2;
+	if (capacity == 0)
+		capacity = 1;
+	tmp = (int *)malloc(capacity * sizeof(int));
 	if (tmp == NULL)
-		return ;
+		return (0);
+	i = p->size;
 	while (i--)
 		tmp[i] = p->nums[i];
 	free(p->nums);
 	p->nums = tmp;
+	p->capacity = capacity;
+	return (1);
 }
 
 int	normalizer(t_stack *a)
