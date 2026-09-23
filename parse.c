@@ -94,6 +94,8 @@ static int	fill_array(t_state *data, int ac, int i, char **av)
 	while (i < ac)
 	{
 		vnum = ft_split(av[i++], ' ');
+		if (vnum == NULL)
+			return (ps_abort(data));
 		ok = (vnum[0] != NULL);
 		x = 0;
 		while (vnum[x])
