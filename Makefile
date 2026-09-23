@@ -20,11 +20,13 @@ SRCS = push_swap.c push_swap_utils.c push_swap_utils_two.c push_swap_utils_three
 		ps_atoi.c ps_strcmp.c parse.c print_bench.c operations.c merge_sort.c \
 		radix_sort.c selection_sort.c chunk_sort.c
 OBJS = $(SRCS:.c=.o)
+HEADERS = push_swap.h $(LIBFT_DIR)/libft.h
 
 BONUS = checker
 BONUS_SRCS = checker_bonus.c checker_parser_bonus.c vector_bonus.c \
 		operations_bonus.c get_next_line_bonus.c get_next_line_utils_bonus.c
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
+BONUS_HEADERS = checker_bonus.h get_next_line_bonus.h $(LIBFT_DIR)/libft.h
 
 all: $(NAME)
 
@@ -41,6 +43,10 @@ $(LIBFT):
 
 %.o: %.c
 	$(CC) $(CFLAGS) -I $(LIBFT_DIR) -c $< -o $@
+
+$(OBJS): $(HEADERS)
+
+$(BONUS_OBJS): $(BONUS_HEADERS)
 
 clean:
 	make -C $(LIBFT_DIR) clean
