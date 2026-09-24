@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by ljanuari, samupedr[/].*
+*This project has been created as part of the 42 curriculum by ljanuari, samupedr.*
 
 # push_swap
 
@@ -24,12 +24,24 @@ selected at runtime:
 | `--complex` | O(n log n) — Radix Sort (LSD, base 2) |
 | `--adaptive` (default) | selects an internal method based on the measured **disorder** of the input |
 
-The disorder of the initial stack is measured **before any move is performed**, as
-the ratio of inverted pairs to the total number of pairs (a value between 0 and 1):
+## Disorder Metric
 
-```
-disorder(a) = |{ (i, j) : i < j and a[i] > a[j] }| / (n * (n - 1) / 2)
-```
+The disorder of the initial stack is measured **before any move is performed**,
+as the ratio of inverted pairs to the total number of pairs:
+
+$$
+\text{disorder}(a) = \frac{\text{number of inversions}}{\text{total pairs}}
+                   = \frac{|\{\,(i,j) : i < j \text{ and } a[i] > a[j]\,\}|}{\dfrac{n\,(n-1)}{2}}
+$$
+
+The result is a value between `0` (already sorted) and `1` (fully reversed),
+used by the adaptive strategy to pick the internal method:
+
+| Disorder `d` | Internal method | Class (Push_swap model) |
+|---|---|---|
+| `d < 0.2` | Selection Sort adaptation | O(n²) |
+| `0.2 ≤ d < 0.5` | Chunk Sort | O(n√n) |
+| `d ≥ 0.5` | Radix Sort | O(n log n) |
 
 An optional `--bench` flag prints a full report to **stderr** — disorder (with two
 decimal places), the selected strategy and its complexity class, the total number of
@@ -87,75 +99,49 @@ everything back with `pa`. Because the minimums are pushed in increasing order, 
 holds them in decreasing order from bottom to top, so the final `pa` sweep rebuilds
 a sorted `a` with no extra positioning.
 
-**Complexity argument (upper bound).** To extract an element from a stack of `m`
-elements costs at most `⌊m/2⌋` rotations (shortest direction) plus 1 `pb`. Summing
-over the `n-1` extractions plus the final push-back:
+**Complexity argument (Intuitive derivation):**
+* Finding and moving the minimum in a stack of size $k$ takes at most $k/2$ rotations.
+* Summing this cost over all $n$ elements:
 
-```
-T(n) ≤ Σ_{m=2}^{n} (⌊m/2⌋ + 1) + (n - 1)
-     ≤ (1/2)·Σ_{m=1}^{n} m + 2n
-     = n(n + 1)/4 + 2n
-     = O(n²)
-```
+$$T(n) = \sum_{k=1}^{n} \frac{k}{2} + n = \frac{n(n + 1)}{4} + n = \frac{n^2}{4} + \frac{5n}{4}$$
 
-Justification: trivially correct, almost no extra state, and cheap on nearly-sorted
-inputs where each minimum is already close to the top — exactly the profile the
-adaptive strategy exploits for `disorder < 0.2`.
+* Dropping lower-order terms and constant coefficients yields **$\mathcal{O}(n^2)$**.
+
+---
 
 ### 2. Medium strategy — Chunk Sort — O(n√n)
 
-Chunk sort is a **range-based partitioning** method over the normalized ranks. The
-rank space `0..n-1` is sliced into contiguous ranges of width
+Chunk sort partitions the $n$ normalized ranks into $S$ chunks of width $W = n / S$.
 
-```
-w = ⌊1.5 · √n⌋          (implemented as (ps_sqrt(n) * 3) / 2)
-```
+**Complexity argument (Optimization via derivative):**
+The total operation count $T(n, S)$ is governed by two main costs:
+1. **Scanning Stack A**: Scanning `a` to extract elements for $S$ chunks takes at most $n$ rotations per chunk pass $\implies S \cdot n$ operations.
+2. **Positioning in Stack B**: Inserting each of the $n$ elements into its position in `b` (size $W$) takes on average $W/2 = n / (2S)$ rotations $\implies n \cdot \frac{n}{2S} = \frac{n^2}{2S}$ operations.
 
-Chunks are a pure concept over ranks, not physical containers: the algorithm keeps a
-growing threshold `k = w, 2w, 3w, ...` and, for each threshold, pushes up to `w`
-elements whose rank is `< k` from `a` to `b` — i.e. rank `0..w-1` leave first, then
-`w..2w-1`, and so on until `a` is empty. Each element is reached by scanning `a`
-from both ends and rotating the **shortest way**. Since elements enter `b` in global
-rank order, `b` stays nearly sorted, and a final pass (`find_max` + `pa`) rebuilds
-a sorted `a`. The `1.5` factor on the chunk width is an empirical optimization of
-the total operation count.
+Summing both costs gives:
 
-**Complexity argument (upper bound).** With `w = ⌊1.5√n⌋` there are
-`⌈n/w⌉ ≤ (2/3)√n + 1` thresholds. For each threshold the stack is scanned at most
-once (`≤ n` rotations total per threshold, because every rotation step brings a new
-element to the top), and each element is pushed exactly once (`n` `pb`'s) and pushed
-back once (`n` `pa`'s):
+$$T(n, S) = S \cdot n + \frac{n^2}{2S}$$
 
-```
-T(n) ≤ n·⌈n/w⌉ + n + n
-     ≤ n·((2/3)√n + 1) + 2n
-     = (2/3)·n√n + 3n
-     = O(n√n)
-```
+To find the optimal number of chunks $S$ that minimizes total operations, we take the derivative of $T$ with respect to $S$ and set it to zero:
 
-Justification: chunking converts one "global" sort into `≈ √n` almost-local passes,
-which is the sweet spot between the simplicity of O(n²) methods and the bitwise
-machinery of radix sort. It dominates on medium-disorder inputs.
+$$\frac{dT}{dS} = n - \frac{n^2}{2S^2} = 0 \implies n = \frac{n^2}{2S^2} \implies S^2 = \frac{n}{2} \implies S = \sqrt{\frac{n}{2}}$$
+
+Substituting $S = \sqrt{n / 2}$ back into the cost equation:
+
+$$T(n) = \left(\sqrt{\frac{n}{2}}\right) \cdot n + \frac{n^2}{2\sqrt{n/2}} = \sqrt{2} \cdot n\sqrt{n} = \mathbf{\mathcal{O}(n\sqrt{n})}$$
+
+---
 
 ### 3. Complex strategy — Radix Sort (LSD, base 2) — O(n log n)
 
-After normalization every value is a rank in `0..n-1`, representable with
-`b = ⌈log₂(n-1)⌉` bits. The algorithm performs **b least-significant-bit passes**:
-on pass `k`, elements with bit `k` equal to 0 are pushed to `b`, elements with bit
-`k` equal to 1 stay on `a` (rotated), and then everything is pushed back to `a` —
-a stable binary partition by bit `k`. After `b` passes the stack is sorted. When `n`
-is a power of two, the extra pass where every bit would be 0 is skipped (the largest
-normalized value is `n - 1`).
+Operates on normalized ranks ($0$ to $n-1$) using base-2 bitwise operations.
 
-**Complexity argument (upper bound).** Each pass moves every element exactly once to
-`b` (`n` `pb`'s) and once back (`n` `pa`'s), so each pass costs exactly `2n`
-operations, and there are `⌈log₂(n-1)⌉` passes:
+**Complexity argument:**
+* **Bit passes**: Representing values up to $n-1$ in binary requires $B = \lceil \log_2 n \rceil$ bits.
+* **Cost per pass**: Every pass checks all $n$ elements in `a` ($n$ operations: `ra` or `pb`) and pushes them back from `b` to `a` ($n$ operations: `pa`), costing exactly $2n$ operations per bit.
+* **Total Cost**:
 
-```
-T(n) = 2n · ⌈log₂(n-1)⌉
-     ≤ 2n·log₂ n
-     = O(n log n)
-```
+$$T(n) = 2n \cdot \lceil \log_2 n \rceil \approx 2n \log_2 n = \mathbf{\mathcal{O}(n \log n)}$$
 
 Justification: radix sort gives a **distribution-independent** near-linearithmic
 count — the number of passes depends only on the bit length, never on how scrambled
@@ -225,15 +211,15 @@ fully understood by ljanuari and samupedr.
 
 Principal source of inspiration for the choice and adaptation of the sorting
 algorithms:
-[GeeksforGeeks — Selection Sort](https://www.geeksforgeeks.org/dsa/selection-sort-algorithm-2/)
+[GeeksforGeeks](https://www.geeksforgeeks.org/)
 (alongside the 42 subject's own complexity constraints).
 
 ## Authors
 
-- **ljanuari** (Leosnane Januario) — chunk sort, disorder metric & benchmark output,
-  buffer manager, stack operations, initial parsing
-- **samupedr** (Samuel Pedro) — radix sort, merge sort normalizer, selection sort
-  refinements, Makefile, checker + get_next_line, parser (flags in any order, strict
+- **ljanuari** (Leosnane Januario) — chunk sort, merge sort normalizer,disorder metric & benchmark
+  output, buffer manager, stack operations, initial parsing
+- **samupedr** (Samuel Pedro) — radix sort, selection sort, refinements, Makefile
+  checker + get_next_line, parser (flags in any order, strict
   blank-argument rejection), error handling
 
 42 Luanda — 2026
