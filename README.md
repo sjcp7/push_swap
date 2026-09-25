@@ -26,7 +26,7 @@ selected at runtime:
 
 ## Disorder Metric
 
-The disorder of the initial stack is measured **before any move is performed**,
+The disorder of the initial stack is measured before any move is performed,
 as the ratio of inverted pairs to the total number of pairs:
 
 $$
@@ -60,13 +60,11 @@ make bonus      # builds the bonus ./checker
 ./push_swap --bench [--simple|--medium|--complex|--adaptive] [numbers...]
 ```
 
-Flags may be given in **any order**, but at most one strategy flag and one
+Flags may be given in any order, but at most one strategy flag and one
 `--bench` may be provided. The first argument is the top of the stack. Error
 handling: non-integer arguments, values outside the `int` range, duplicates, and
 empty/blank arguments (`""` or `"   "`) make the program print `Error` followed by
-a newline on **stderr**. (Rejecting empty/blank arguments is a deliberate choice:
-it matches the strictness of the reference checker binary.)
-
+a newline on **stderr**.
 Examples:
 
 ```
@@ -84,17 +82,14 @@ $> cat bench.txt
 
 All input numbers are first **normalized** (rank-compressed to `0 .. n-1` with a
 merge sort), so that every algorithm works on ranks instead of raw values. The
-complexity classes below are stated in the **Push_swap operation model**, i.e. they
-measure the number of generated operations, as required by the subject. Auxiliary
-space is `O(n)` in all strategies (the two stacks plus normalization and the output
-buffer); no global variables are used.
+complexity classes below are stated in the Push_swap operation model, i.e. they
+measure the number of generated operations. Auxiliary space is `O(n)` in all strategies (the two stacks plus normalization and the output buffer).
 
 ### 1. Simple strategy — Selection Sort adaptation — O(n²)
 
-The classic selection sort idea, adapted to two stacks: repeatedly find the **minimum**
+The classic selection sort idea, adapted to two stacks: repeatedly find the minimum
 of `a`, bring it to the top rotating the **shortest way** (`ra` or `rra`, whichever
-needs fewer moves — the `reverse_op` helper flips the direction when the index is
-past half the stack), push it to `b`; when only the maximum is left on `a`, push
+needs fewer moves), push it to `b`; when only the maximum is left on `a`, push
 everything back with `pa`. Because the minimums are pushed in increasing order, `b`
 holds them in decreasing order from bottom to top, so the final `pa` sweep rebuilds
 a sorted `a` with no extra positioning.
@@ -143,11 +138,6 @@ Operates on normalized ranks ($0$ to $n-1$) using base-2 bitwise operations.
 
 $$T(n) = 2n \cdot \lceil \log_2 n \rceil \approx 2n \log_2 n = \mathbf{\mathcal{O}(n \log n)}$$
 
-Justification: radix sort gives a **distribution-independent** near-linearithmic
-count — the number of passes depends only on the bit length, never on how scrambled
-the input is. This is the strongest worst-case guarantee of the three, which is why
-the adaptive strategy reserves it for the hardest inputs (`disorder ≥ 0.5`).
-
 ### 4. Adaptive strategy — disorder-based selection
 
 The adaptive strategy measures the disorder `d` of the initial stack **before any
@@ -160,20 +150,10 @@ move** and dispatches to the internal method best suited for that regime
 | `0.2 ≤ d < 0.5` | Chunk Sort | O(n√n) |
 | `d ≥ 0.5` | Radix Sort | O(n log n) |
 
-**Threshold rationale.** `0.5` is the subject-mandated boundary: at and above it the
-chosen method must run in O(n log n), which radix sort guarantees. `0.2` is the
-empirically measured crossing point between the two cheaper methods: below it, the
-quadratic method's extraction cost (a few rotations per element, and an immediate
-exit through the `is_sorted` guard on sorted input) is smaller than the fixed price
-chunk sort always pays for its `√n` passes; above it, the quadratic cost grows
-linearly with disorder while the chunk count stays at `≈ (2/3)√n`, so the O(n√n)
-method is strictly cheaper. Each regime therefore respects its required complexity
-target in the Push_swap operation model.
-
 ## The Buffer Manager
 
-Internally, generated operations are not written to stdout one syscall at a time.
-Every operation is appended as an enum value to a **dynamically growing buffer**
+Internally, generated operations are not written to stdout at operation time.
+Every operation is appended as an enum value to a dynamically growing buffer
 (`buffer_push`, capacity doubling via `buffer_realloc`), which is processed and
 flushed exactly once at the end (`buffer_flush`). Before flushing, a simplification
 pass (`buffer_simplify`, applied until fixpoint) shortens the stream by applying
@@ -186,40 +166,32 @@ local rewrite rules to adjacent operations:
   `rrr ra` → `rrb`, `rrr rb` → `rra`.
 
 The buffer manager gives us three things: a clean stdout stream (one final flush, so
-the output contains **only** operations separated by `\n`), the `--bench` statistics
+the output contains only operations separated by `\n`), the `--bench` statistics
 (total and per-operation counts are computed from the same enum stream during the
 flush), and a measurable reduction of the final operation count. Allocation failure
-at any growth step is handled gracefully through `ps_abort` (no leaks, no partial
-output).
+at any growth step is handled through `ps_abort`.
 
-## Bonus — checker
+## Bonus: The checker
 
 `make bonus` builds `checker`, which takes the stack as argument (first argument at
 the top), reads operations from standard input with our own `get_next_line`,
 executes them, and prints `OK` if `a` is sorted and `b` is empty, `KO` otherwise.
 Invalid arguments, duplicates, unknown or malformed instructions print `Error` on
-stderr. Like the push_swap parser, the checker **rejects empty and blank arguments**
-(`""`, `"   "`), matching the strictness of the reference binary.
+stderr. 
 
 ## AI Usage and Resources
 
-We used AI tools (chat-based assistants) **exclusively as consultants** during this
-project: to discuss algorithmic ideas, review design trade-offs and sanity-check test
-strategies. We never asked AI for ready-made project code, and no code in this
-repository was copied from an AI output; every line was written, reviewed and is
-fully understood by ljanuari and samupedr.
+We used AI tools (chat-based assistants) as consultants during this project: to discuss algorithmic ideas, review design trade-offs and sanity-check test strategies, as well as to draft most of this README.
 
 Principal source of inspiration for the choice and adaptation of the sorting
 algorithms:
 [GeeksforGeeks](https://www.geeksforgeeks.org/)
 (alongside the 42 subject's own complexity constraints).
 
+We also used a [Push Swap Visualizer](https://push-swap-visualizer.vercel.app/).
+
 ## Authors
 
-- **ljanuari** (Leosnane Januario) — chunk sort, merge sort normalizer,disorder metric & benchmark
+- **ljanuari** (Leosnane Januario) — chunk sort, merge sort normalizer, disorder metric, benchmark, get_next_line implementation
   output, buffer manager, stack operations, initial parsing
-- **samupedr** (Samuel Pedro) — radix sort, selection sort, refinements, Makefile
-  checker + get_next_line, parser (flags in any order, strict
-  blank-argument rejection), error handling
-
-42 Luanda — 2026
+- **samupedr** (Samuel Pedro) — complexity calculation and review, radix sort, selection sort, refinements, Makefile, checker, error handling, bug chasing
