@@ -48,7 +48,7 @@ decimal places), the selected strategy and its complexity class, the total numbe
 operations and per-operation counts — without polluting the operation stream on
 stdout.
 
-## Building and Usage
+## Instructions
 
 ```
 make            # builds ./push_swap
@@ -102,6 +102,8 @@ $$T(n) = \sum_{k=1}^{n} \frac{k}{2} + n = \frac{n(n + 1)}{4} + n = \frac{n^2}{4}
 
 * Dropping lower-order terms and constant coefficients yields **$\mathcal{O}(n^2)$**.
 
+This algorithm was picked for its ease of implementation. It is intuitive, too.
+
 ---
 
 ### 2. Medium strategy — Chunk Sort — O(n√n)
@@ -125,6 +127,8 @@ Substituting $S = \sqrt{n / 2}$ back into the cost equation:
 
 $$T(n) = \left(\sqrt{\frac{n}{2}}\right) \cdot n + \frac{n^2}{2\sqrt{n/2}} = \sqrt{2} \cdot n\sqrt{n} = \mathbf{\mathcal{O}(n\sqrt{n})}$$
 
+We picked this one because it was the more fun one to implement. :)
+
 ---
 
 ### 3. Complex strategy — Radix Sort (LSD, base 2) — O(n log n)
@@ -138,11 +142,13 @@ Operates on normalized ranks ($0$ to $n-1$) using base-2 bitwise operations.
 
 $$T(n) = 2n \cdot \lceil \log_2 n \rceil \approx 2n \log_2 n = \mathbf{\mathcal{O}(n \log n)}$$
 
+This binary version translates very well to the push_swap double stack model, so we felt it was natural to implement and comprehend.
+
 ### 4. Adaptive strategy — disorder-based selection
 
-The adaptive strategy measures the disorder `d` of the initial stack **before any
-move** and dispatches to the internal method best suited for that regime
-(see `compute_strategy`):
+The adaptive strategy measures the disorder `d` of the initial stack before any
+move and dispatches to the internal method best suited for that regime. 
+Given that the subject explicitly mandates specific complexity classes for each threshold, we decided to just route between the aforementioned algorithms:
 
 | Regime | Internal method | Class (Push_swap model) |
 |---|---|---|
@@ -179,7 +185,7 @@ executes them, and prints `OK` if `a` is sorted and `b` is empty, `KO` otherwise
 Invalid arguments, duplicates, unknown or malformed instructions print `Error` on
 stderr. 
 
-## AI Usage and Resources
+## Resources
 
 We used AI tools (chat-based assistants) as consultants during this project: to discuss algorithmic ideas, review design trade-offs and sanity-check test strategies, as well as to draft most of this README.
 
@@ -190,7 +196,7 @@ algorithms:
 
 We also used a [Push Swap Visualizer](https://push-swap-visualizer.vercel.app/).
 
-## Authors
+## Contribution
 
 - **ljanuari** (Leosnane Januario) — chunk sort, merge sort normalizer, disorder metric, benchmark, get_next_line implementation
   output, buffer manager, stack operations, initial parsing
