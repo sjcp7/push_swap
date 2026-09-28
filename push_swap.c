@@ -30,7 +30,7 @@ static int	run_sort(t_state *data)
 {
 	if (is_sorted(data->a))
 		return (1);
-	if (data->a->size <= 5)
+	if (data->a->size >= 3 && data->a->size <= 5)
 		return (sort_5(data));
 	if (data->bench.strategy == 1)
 		return (selection_sort(data));
