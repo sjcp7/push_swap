@@ -31,7 +31,7 @@ static int	sort_3(t_state *data)
 	if ((trio[0] < trio[2]) != (trio[1] < trio[2]))
 		if (!operation(data, RA))
 			return (0);
-	if (trio[0] && trio[1] > trio[2])
+	if (trio[0] > trio[2] && trio[1] > trio[2])
 		if (!operation(data, RRA))
 			return (0);
 	return (1);
@@ -69,24 +69,19 @@ static int	push_min(t_state *data)
 {
 	int			index;
 	t_operation	op;
-	int			reps;
 	t_stack		*a;
 
 	a = data->a;
-	reps = a->size;
-	while (--reps)
-	{
-		index = find_min(a);
-		if (index == -1)
-			break ;
-		op = RA;
-		reverse_op(&index, a->size, &op);
-		while (index--)
-			if (operation(data, op) == 0)
-				return (0);
-		if (operation(data, PB) == 0)
+	index = find_min(a);
+	if (index == -1)
+		return (0);
+	op = RA;
+	reverse_op(&index, a->size, &op);
+	while (index--)
+		if (operation(data, op) == 0)
 			return (0);
-	}
+	if (operation(data, PB) == 0)
+		return (0);
 	return (1);
 }
 
